@@ -1,0 +1,185 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
+  height: 100vh;
+  font-family: 'Muli', sans-serif; }
+
+header {
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  header h2 {
+    font-family: 'Dancing Script', cursive;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700; }
+
+.board {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center; }
+
+.list {
+  height: 500px;
+  width: 300px;
+  background: #E2E4E6;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal; }
+  .list__header {
+    padding: 8px 10px;
+    position: relative;
+    min-height: 18px;
+    font-weight: 600;
+    color: #4d4d4d; }
+    .list__header__target {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0; }
+  .list .open-list-composer {
+    color: #8c8c8c;
+    cursor: pointer; }
+    .list .open-list-composer:hover {
+      text-decoration: underline; }
+  .list__items {
+    padding: 0 4px;
+    margin: 0 4px; }
+  .list__item {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 6px;
+    max-width: 300px;
+    min-height: 20px;
+    position: relative;
+    z-index: 0;
+    padding: 6px 6px 2px 8px; }
+    .list__item::after {
+      content: "";
+      background-image: url("../../src/img/icon-light.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 16px;
+      width: 16px;
+      position: absolute;
+      top: 50%;
+      right: 7px;
+      transform: translateY(-50%); }
+    .list__item__composer-textarea {
+      background: 0 0;
+      border: none;
+      box-shadow: none;
+      height: auto;
+      margin-bottom: 4px;
+      max-height: 162px;
+      min-height: 54px;
+      overflow-y: auto;
+      padding: 0; }
+
+.is-hidden {
+  display: none; }
+
+.list__header__input, .list__item__composer-textarea {
+  background: 0 0;
+  border: none;
+  border-radius: 3px;
+  box-shadow: none;
+  font-weight: 700;
+  margin: -3px -5px;
+  height: 18px;
+  min-height: 18px;
+  padding: 3px 5px;
+  resize: none;
+  max-height: 16pc;
+  font-family: 'Muli';
+  color: #4d4d4d;
+  transition: background 85ms ease-in,border-color 85ms ease-in;
+  width: 100%; }
+  .list__header__input:focus, .list__item__composer-textarea:focus {
+    background-color: #fff;
+    outline: none; }
+
+.list__item__composer-textarea {
+  box-sizing: border-box;
+  background-color: #fff;
+  height: auto;
+  margin: 0;
+  padding: 3px 5px;
+  max-height: 162px;
+  min-height: 54px; }
+
+button {
+  padding: .3em .6em;
+  margin-top: 5px;
+  margin-right: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #58a linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+  border-radius: .2em;
+  box-shadow: 0 0.05em 0.25em rgba(0, 0, 0, 0.5);
+  color: white;
+  text-shadow: 0 -0.05em 0.05em rgba(0, 0, 0, 0.5);
+  font-size: 100%;
+  line-height: 1.5;
+  cursor: pointer; }
+  button:focus {
+    outline: none; }
+  button.btn-add-task {
+    background-color: #6b0; }
+  button.btn-cansel-add-task {
+    background-color: #eb0000; }
+
+/*# sourceMappingURL=style.css.map */
