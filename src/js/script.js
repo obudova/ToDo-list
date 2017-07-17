@@ -1,4 +1,6 @@
 
-const list = document.getElementById('myFirstList');
+var list = document.getElementById('myFirstList'),
+    list2 = document.getElementById('mySecondList');
 
-let test = new ToDoList(list);
+var test = new ToDoList(list);
+var tes2 = new ToDoList(list2);

@@ -8,7 +8,7 @@
 .list{
   height: 500px;
   width: 300px;
-  background: #E2E4E6;
+  background: rgba(224, 223, 223, 1);
   border-radius: 3px;
   box-sizing: border-box;
   display: flex;
@@ -33,8 +33,10 @@
     }
   }
   .open-list-composer{
+    display: inline-block;
     color: #8c8c8c;
     cursor: pointer;
+    margin-bottom: 10px;
     &:hover{
       text-decoration: underline;
     }
@@ -44,7 +46,7 @@
     margin: 0 4px;
   }
   &__item{
-    background-color: #fff;
+    background-color: rgb(229, 238, 255);
     border-bottom: 1px solid #ccc;
     border-radius: 3px;
     cursor: pointer;
@@ -54,18 +56,7 @@
     position: relative;
     z-index: 0;
     padding: 6px 6px 2px 8px;
-    &::after{
-      content: "";
-      background-image: url("../../src/img/icon-light.svg");
-      background-size: contain;
-      background-repeat: no-repeat;
-      height: 16px;
-      width: 16px;
-      position: absolute;
-      top: 50%;
-      right: 7px;
-      transform: translateY(-50%);
-    }
+    display: flex;
     &__composer-textarea{
       background: 0 0;
       border: none;
@@ -80,10 +71,10 @@
   }
 }
 .is-hidden{
-  display: none;
+  display: none !important;
 }
 
-.list__header__input, .list__item__composer-textarea{
+.list__header__input, .list__item__composer-textarea, .task-name__input{
   background: 0 0;
   border: none;
   border-radius: 3px;
@@ -112,5 +103,44 @@
   padding: 3px 5px;
   max-height: 162px;
   min-height: 54px;
+  font-weight:300;
 
+}
+.composer__container{
+  margin-bottom: 10px;
+}
+.checkbox{
+  height: 15px;
+  width: 15px;
+  border: 1px solid #dadada;
+  background-color: #fff;
+
+  .is-done &{
+    background: url(../../src/img/tick.svg) #fff;
+    background-size: contain;
+  }
+}
+.task-name__container{
+  position: relative;
+  .task-name__target{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+  .task-name__input{
+    margin-left: 10px;
+    font-weight: 400;
+    //height: auto;
+    .is-done &{
+      text-decoration: line-through;
+    }
+    &:focus{
+      .is-done &{
+        text-decoration: none;
+      }
+    }
+  }
 }

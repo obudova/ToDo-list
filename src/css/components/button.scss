@@ -1,23 +1,36 @@
-button{
+button {
   padding: .3em .6em;
   margin-top: 5px;
   margin-right: 10px;
-  border: 1px solid rgba(0,0,0,.1);
-  background: #58a linear-gradient(hsla(0,0%,100%,.2), transparent);
+  border: 1px solid rgba(0, 0, 0, .1);
+  background: #58a linear-gradient(hsla(0, 0%, 100%, .2), transparent);
   border-radius: .2em;
-  box-shadow: 0 .05em .25em rgba(0,0,0,.5);
+  box-shadow: 0 .05em .25em rgba(0, 0, 0, .5);
   color: white;
-  text-shadow: 0 -.05em .05em rgba(0,0,0,.5);
+  text-shadow: 0 -.05em .05em rgba(0, 0, 0, .5);
   font-size: 100%;
   line-height: 1.5;
   cursor: pointer;
-  &:focus{
+  &:focus {
     outline: none;
   }
-  &.btn-add-task{
-   background-color: #6b0;
+  &.btn-add-task {
+    background-color: #6b0;
   }
-  &.btn-cansel-add-task{
+  &.btn-cansel-add-task {
     background-color: #eb0000;
   }
+}
+
+a.btn-remove {
+  background-image: url("../../src/img/icon-light.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  display: block;
 }
