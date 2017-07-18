@@ -1,6 +1,4 @@
-
-var list = document.getElementById('myFirstList'),
-    list2 = document.getElementById('mySecondList');
-
-var test = new ToDoList(list);
-var tes2 = new ToDoList(list2);
+const btnBuilder = document.getElementById('todoBuilder');
+let builder =   new ToDoBuilder(btnBuilder);
+let list = document.getElementById('myFirstList');
+let test = new ToDoList(list);

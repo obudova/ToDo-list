@@ -62,8 +62,11 @@ header {
   height: calc(100vh - 60px);
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center; }
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 65px 0;
+  overflow-x: auto;
+  max-width: 100vw; }
 
 .list {
   height: 500px;
@@ -74,8 +77,10 @@ header {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  min-width: 300px;
   position: relative;
-  white-space: normal; }
+  white-space: normal;
+  margin-right: 65px; }
   .list__header {
     padding: 8px 10px;
     position: relative;
@@ -89,16 +94,10 @@ header {
       left: 0;
       right: 0;
       bottom: 0; }
-  .list .open-list-composer {
-    display: inline-block;
-    color: #8c8c8c;
-    cursor: pointer;
-    margin-bottom: 10px; }
-    .list .open-list-composer:hover {
-      text-decoration: underline; }
   .list__items {
     padding: 0 4px;
-    margin: 0 4px; }
+    margin: 0 4px;
+    flex-grow: 2; }
   .list__item {
     background-color: #e5eeff;
     border-bottom: 1px solid #ccc;
@@ -121,6 +120,8 @@ header {
       min-height: 54px;
       overflow-y: auto;
       padding: 0; }
+  .list__controls {
+    padding: 8px 10px; }
 
 .is-hidden {
   display: none !important; }
@@ -215,5 +216,27 @@ a.btn-remove {
   right: 7px;
   transform: translateY(-50%);
   display: block; }
+
+.open-list-composer, .btn-clear-all {
+  display: inline-block;
+  color: #8c8c8c;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-decoration: none; }
+  .open-list-composer:hover, .btn-clear-all:hover {
+    text-decoration: underline; }
+
+.btn-remove-list {
+  background-image: url("../../src/img/cross-remove-sign.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  display: block;
+  cursor: pointer; }
 
 /*# sourceMappingURL=style.css.map */

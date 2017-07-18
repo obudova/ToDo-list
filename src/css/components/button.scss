@@ -34,3 +34,26 @@ a.btn-remove {
   transform: translateY(-50%);
   display: block;
 }
+.open-list-composer , .btn-clear-all{
+  display: inline-block;
+  color: #8c8c8c;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+.btn-remove-list{
+  background-image: url("../../src/img/cross-remove-sign.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  transform: translateY(-50%);
+  display: block;
+  cursor: pointer;
+}

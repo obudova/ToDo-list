@@ -2,14 +2,13 @@ const defaultOptions ={
     listTitle: 'my List'
 };
 
-const addTemplateHeader = `
+const Template = `
+
 <div class="list__header">
     <div class="list__header__target"></div>
     <textarea class="list__header__input"></textarea>
+    <a class="btn-remove-list"></a>
 </div>
-`;
-
-const addTemplateListContainer = `
 <div class="list__items">
     <div class="composer__container is-hidden">
         <textarea class="list__item__composer-textarea"></textarea>
@@ -17,6 +16,9 @@ const addTemplateListContainer = `
         <button class="btn-cansel-add-task"></button>
     </div>
     <a  class="open-list-composer"></a>
+</div>
+<div class="list__controls">
+    <a  class="btn-clear-all">Clear All</a>
 </div>
 `;
 
@@ -27,9 +29,9 @@ class ToDoList{
      * @param list
      * @param options
      */
-    constructor(list, options){
-        this.list=list;
-        this.list.innerHTML = addTemplateHeader + addTemplateListContainer;
+    constructor(options){
+        this.list=document.createElement('div');
+        this.list.innerHTML = Template;
         this.option=Object.assign({},defaultOptions, options);
 
         this.titleName = this.option.listTitle;
@@ -44,21 +46,27 @@ class ToDoList{
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
         this.btnCanselComposer =  this.composerContainer.querySelector('.btn-cansel-add-task');
+        this.btnClearAll = this.list.querySelector('.btn-clear-all');
 
+        this.btnRemoveList = this.list.querySelector('.btn-remove-list');
+        this.id = Date.now();
         this.tasksArr = [];
         this.init();
     }
     init(){
         console.log(this.list);
-        this.initHtmlComponents();
+        this.list.classList.add('list');
+        this.list.setAttribute('id', this.id);
+        this.createComponents();
         this.initEvents();
         this.initLocalStorage();
     }
-    initHtmlComponents(){
+    createComponents(){
         this.titleTextarea.value = this.option.listTitle;
         this.composerLink.textContent = 'Add new task...';
         this.btnAddTask.textContent = "Add";
         this.btnCanselComposer.textContent = "Cansel";
+        this.accomplish();
     }
     initEvents(){
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
@@ -66,6 +74,8 @@ class ToDoList{
         this.composerLink.addEventListener('click', this.onComposerLinkClick.bind(this));
         this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
         this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+        this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this))
+        this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         this.listItemsContainer.addEventListener('keydown', (e)=>{
            if(e.keyCode==ENTER_KEYCODE){
                this.addTask.bind(this)();
@@ -109,6 +119,9 @@ class ToDoList{
                 onResolve: (task, taskObj) => {
                     this.tasksArr.push(taskObj);
                     this.listItemsContainer.appendChild(task);
+                },
+                updateTask: ()=>{
+
                 }
             });
             console.log(this.tasksArr);
@@ -121,7 +134,7 @@ class ToDoList{
     deleteTask(e) {
         const taskId = e.detail.id;
         this.tasksArr = this.tasksArr.filter((elem)=>{
-            return elem.id != taskId;
+            return elem.id !== taskId;
         });
         document.getElementById(e.detail.id).remove();
     }
@@ -143,8 +156,28 @@ class ToDoList{
         this.tasksArr[index].name = e.detail.updated;
         this.updateLocalStorage();
     }
+    initLocalStorage(){
+
+    }
     updateLocalStorage(){
         localStorage.setItem('hello', 'kitty');
+    }
+    clearAllTasks(){
+        const TaskNodes = this.listItemsContainer.querySelectorAll('.list__item');
+        TaskNodes.forEach((elem) =>{
+            elem.remove();
+        });
+        this.tasksArr = [];
+    }
+    accomplish(){
+        this.option.onResolve && this.option.onResolve.call(this, this.list);
+    }
+    removeList(){
+        const eventRemoveList = new CustomEvent('removeList', {
+            bubbles: true,
+            detail: this
+        });
+        this.list.dispatchEvent(eventRemoveList);
     }
 
 }
