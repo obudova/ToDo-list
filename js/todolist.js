@@ -48,11 +48,11 @@ var ToDoList = function () {
         key: 'init',
         value: function init() {
             console.log(this.list);
-            this.initHtmlComponents();
+            this.createComponents();
             this.initEvents();
         }
     }, {
-        key: 'initHtmlComponents',
+        key: 'createComponents',
         value: function initHtmlComponents() {
             this.titleTextarea.value = this.option.listTitle;
             this.composerLink.textContent = 'Add new task...';
