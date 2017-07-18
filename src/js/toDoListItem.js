@@ -103,8 +103,5 @@ class ToDoListItem {
         };
         this.options.onResolve && this.options.onResolve.call(this, this.listItem, task);
     }
-    onUpdate(){
-        this.options.updateTask && this.options.updateTask.call(this, )
-    }
 
 }

@@ -74,7 +74,7 @@ class ToDoList{
         this.composerLink.addEventListener('click', this.onComposerLinkClick.bind(this));
         this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
         this.btnAddTask.addEventListener('click', this.addTask.bind(this));
-        this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this))
+        this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         this.listItemsContainer.addEventListener('keydown', (e)=>{
            if(e.keyCode==ENTER_KEYCODE){
