@@ -52,6 +52,7 @@ class ToDoList{
         console.log(this.list);
         this.initHtmlComponents();
         this.initEvents();
+        this.initLocalStorage();
     }
     initHtmlComponents(){
         this.titleTextarea.value = this.option.listTitle;
@@ -140,6 +141,10 @@ class ToDoList{
         }
         const index = this.tasksArr.findIndex(isMatch);
         this.tasksArr[index].name = e.detail.updated;
+        this.updateLocalStorage();
+    }
+    updateLocalStorage(){
+        localStorage.setItem('hello', 'kitty');
     }
 
 }

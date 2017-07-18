@@ -42,7 +42,6 @@ class ToDoListItem {
         this.listItem.classList.add('list__item');
         this.listItem.setAttribute('id', this.id);
         this.nameTextarea.value = this.name;
-        this.btnRemove = document.createElement('a');
         this.btnRemove.classList.add('btn-remove');
 ;
     }
