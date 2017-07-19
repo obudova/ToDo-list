@@ -7,9 +7,9 @@ const listItemTemplate = `
 <a class="btn-remove"></a>
 `;
 class ToDoListItem {
-    constructor(value, options) {
+    constructor(item, value, options) {
         this.name = value;
-        this.listItem = document.createElement('div');
+        this.listItem = item;
         this.listItem.innerHTML = listItemTemplate;
         this.checkbox = this.listItem.querySelector('.checkbox');
         this.nameTarget = this.listItem.querySelector('.task-name__target');
@@ -32,19 +32,20 @@ class ToDoListItem {
             this._isDone = false;
             this.undoCompleteTask();
         }
+
+       // this.item.dispatchEvent(event);
     }
     init() {
-        this.createDoMElements();
+        this.initDoMElements();
         this.initEvents();
-        this.onResolve();
     }
-    createDoMElements(){
-        this.listItem.classList.add('list__item');
+
+    initDoMElements(){
         this.listItem.setAttribute('id', this.id);
         this.nameTextarea.value = this.name;
         this.btnRemove.classList.add('btn-remove');
-;
     }
+
     initEvents(){
         this.btnRemove.addEventListener('click', this.deleteItem.bind(this));
         this.checkbox.addEventListener('click', ()=>{
@@ -52,34 +53,42 @@ class ToDoListItem {
         });
         this.nameTarget.addEventListener('click', this.editItem.bind(this));
         this.nameTextarea.addEventListener('blur', this.renameTask.bind(this));
-
     }
+
     deleteItem(){
         const eventDelete = new CustomEvent('delete', {
             bubbles: true,
             detail: this
         });
         this.listItem.dispatchEvent(eventDelete);
+        this.listItem.remove();
     }
+
     completeTask(){
+        this.listItem.classList.add('is-done');
         const eventComplete = new CustomEvent('complete', {
             bubbles: true,
             detail: this
         });
         this.listItem.dispatchEvent(eventComplete);
+        console.log(this);
     }
+
     undoCompleteTask(){
+        this.listItem.classList.remove('is-done');
         const eventIncomplete = new CustomEvent('incomplete', {
             bubbles: true,
             detail: this
         });
         this.listItem.dispatchEvent(eventIncomplete);
+        console.log(this);
     }
+
     editItem(e){
         this.nameTextarea.focus();
         this.nameTarget.classList.add('is-hidden');
-
     }
+
     renameTask(e){
         const previousName = this.name;
         this.name = this.nameTextarea.value;
@@ -93,15 +102,6 @@ class ToDoListItem {
             }
         });
         this.listItem.dispatchEvent(nameChanged);
-    }
-    onResolve() {
-        let name = this.name;
-        let id = this.id;
-        const task = {
-          name,
-            id
-        };
-        this.options.onResolve && this.options.onResolve.call(this, this.listItem, task);
     }
 
 }

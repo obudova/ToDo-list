@@ -19,7 +19,10 @@ const Template = `
 </div>
 <div class="list__controls">
     <a  class="btn-clear-all">Clear All</a>
+    <div class="counter-done"></div>
 </div>
+
+
 `;
 
 const ENTER_KEYCODE = 13;
@@ -29,8 +32,8 @@ class ToDoList{
      * @param list
      * @param options
      */
-    constructor(options){
-        this.list=document.createElement('div');
+    constructor(list, options){
+        this.list= list;
         this.list.innerHTML = Template;
         this.option=Object.assign({},defaultOptions, options);
 
@@ -50,7 +53,21 @@ class ToDoList{
 
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
         this.id = Date.now();
-        this.tasksArr = [];
+        this.tasksArr = new ToDoListCollection(this.listItemsContainer, [], {
+            onToggle(itemId, status) {
+                this.tasksArr.update(itemId, {
+                    isDone: status
+                })
+            },
+            onRemove(itemId) {
+                this.tasksArr.remove(itemId);
+            },
+            onUpdate(itemId, name) {
+                this.tasksArr.update(itemId, {
+                    name: name
+                })
+            }
+        });
         this.init();
     }
     init(){
@@ -66,7 +83,10 @@ class ToDoList{
         this.composerLink.textContent = 'Add new task...';
         this.btnAddTask.textContent = "Add";
         this.btnCanselComposer.textContent = "Cansel";
-        this.accomplish();
+        this.list
+            .querySelector('.counter-done')
+            .textContent = 0;
+
     }
     initEvents(){
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
@@ -81,14 +101,14 @@ class ToDoList{
                this.addTask.bind(this)();
            }
         });
-        this.listItemsContainer.addEventListener('delete', (e)=>{
-            this.deleteTask(e);
-        });
         this.listItemsContainer.addEventListener('complete', (e)=>{
-            ToDoList.setCompletedTask(e);
+            this.recount(e);
         });
         this.listItemsContainer.addEventListener('incomplete', (e)=>{
-            ToDoList.setIncompleteTask(e);
+            this.recount(e);
+        });
+        this.listItemsContainer.addEventListener('delete', (e)=>{
+            this.deleteTask(e);
         });
         this.listItemsContainer.addEventListener('nameChanged', (e)=>{
             this.changeTaskName(e);
@@ -102,6 +122,13 @@ class ToDoList{
     onTextareaBlur(){
         this.titleName=this.titleTextarea.value;
         this.titleTarget.classList.remove('is-hidden');
+        const updateTitle = new CustomEvent('update',{
+            bubbles: true,
+            detail: {
+                ToDoList: this
+            }
+        });
+        this.list.dispatchEvent(updateTitle);
     }
     onComposerLinkClick(){
         this.composerLink.classList.add('is-hidden');
@@ -115,15 +142,10 @@ class ToDoList{
     }
     addTask(){
         if(this.composerTextarea.value){
-            let task = new ToDoListItem(this.composerTextarea.value, {
-                onResolve: (task, taskObj) => {
-                    this.tasksArr.push(taskObj);
-                    this.listItemsContainer.appendChild(task);
-                },
-                updateTask: ()=>{
-
-                }
-            });
+            const task = document.createElement('div');
+            task.classList.add('list__item');
+            this.listItemsContainer.appendChild(task);
+            this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
             console.log(this.tasksArr);
             this.closeComposer();
         }else {
@@ -136,25 +158,9 @@ class ToDoList{
         this.tasksArr = this.tasksArr.filter((elem)=>{
             return elem.id !== taskId;
         });
-        document.getElementById(e.detail.id).remove();
-    }
-    static setCompletedTask(e){
-        e.target.classList.add('is-done');
-    }
-    static setIncompleteTask(e){
-        e.target.classList.remove('is-done');
     }
     changeTaskName(e){
-        function isMatch(elem) {
-            if(elem.id == e.detail.listItem.id){
-                return true
-            }else {
-                return false;
-            }
-        }
-        const index = this.tasksArr.findIndex(isMatch);
-        this.tasksArr[index].name = e.detail.updated;
-        this.updateLocalStorage();
+        console.log(this.tasksArr);
     }
     initLocalStorage(){
 
@@ -169,15 +175,20 @@ class ToDoList{
         });
         this.tasksArr = [];
     }
-    accomplish(){
-        this.option.onResolve && this.option.onResolve.call(this, this.list);
-    }
     removeList(){
         const eventRemoveList = new CustomEvent('removeList', {
             bubbles: true,
             detail: this
         });
         this.list.dispatchEvent(eventRemoveList);
+        this.list.remove();
     }
-
+    recount(){
+        this.list
+            .querySelector('.counter-done')
+            .textContent = this.tasksArr
+            .filter(todoListItem => todoListItem.isDone)
+            .length;
+    }
 }
+

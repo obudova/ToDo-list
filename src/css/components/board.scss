@@ -1,12 +1,15 @@
 .board{
-  height: calc(100vh - 60px);
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 65px 0;
-  overflow-x: auto;
-  max-width: 100vw;
+  .todo-list-board{
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 65px 0;
+    overflow-x: auto;
+    max-width: 100vw;
+  }
+
 }
 .list{
   height: 500px;

@@ -58,7 +58,7 @@ header {
     font-size: 36px;
     font-weight: 700; }
 
-.board {
+.board .todo-list-board {
   height: calc(100vh - 60px);
   display: flex;
   flex-direction: row;
@@ -238,5 +238,10 @@ a.btn-remove {
   transform: translateY(-50%);
   display: block;
   cursor: pointer; }
+
+#todoBuilder {
+  position: absolute;
+  top: 8px;
+  left: 30px; }
 
 /*# sourceMappingURL=style.css.map */
