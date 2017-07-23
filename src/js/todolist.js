@@ -53,21 +53,22 @@ class ToDoList{
 
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
         this.id = Date.now();
-        this.tasksArr = new ToDoListCollection(this.listItemsContainer, [], {
-            onToggle(itemId, status) {
-                this.tasksArr.update(itemId, {
-                    isDone: status
-                })
-            },
-            onRemove(itemId) {
-                this.tasksArr.remove(itemId);
-            },
-            onUpdate(itemId, name) {
-                this.tasksArr.update(itemId, {
-                    name: name
-                })
-            }
-        });
+        this.tasksArr = [];
+        // this.tasksArr = new ToDoListCollection(this.listItemsContainer, [], {
+        //     onToggle(itemId, status) {
+        //         this.tasksArr.update(itemId, {
+        //             isDone: status
+        //         })
+        //     },
+        //     onRemove(itemId) {
+        //         this.tasksArr.remove(itemId);
+        //     },
+        //     onUpdate(itemId, name) {
+        //         this.tasksArr.update(itemId, {
+        //             name: name
+        //         })
+        //     }
+        // });
         this.init();
     }
     init(){
@@ -151,6 +152,7 @@ class ToDoList{
         }else {
             alert('Task field is empty')
         }
+        // this.tasksArr.add()
 
     }
     deleteTask(e) {
