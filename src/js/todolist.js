@@ -54,21 +54,19 @@ class ToDoList{
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
         this.id = Date.now();
         this.tasksArr = [];
-        // this.tasksArr = new ToDoListCollection(this.listItemsContainer, [], {
-        //     onToggle(itemId, status) {
-        //         this.tasksArr.update(itemId, {
-        //             isDone: status
-        //         })
-        //     },
-        //     onRemove(itemId) {
-        //         this.tasksArr.remove(itemId);
-        //     },
-        //     onUpdate(itemId, name) {
-        //         this.tasksArr.update(itemId, {
-        //             name: name
-        //         })
-        //     }
-        // });
+        this.dataMap = [];
+        if(options){
+            console.log(options);
+            this.titleName = options.name;
+            this.id = options.id;
+            this.tasksArr = options.tasksArr;
+            if(this.tasksArr){
+                this.addStoredTasks();
+            }
+        }else {
+            console.log("No options");
+            this.addToStorage();
+        }
         this.init();
     }
     init(){
@@ -77,10 +75,18 @@ class ToDoList{
         this.list.setAttribute('id', this.id);
         this.createComponents();
         this.initEvents();
-        this.initLocalStorage();
+    }
+    addToStorage(){
+        console.log('Storage Work!');
+        const listData = {
+            name: this.titleName,
+            id: this.id,
+            tasksArr: this.tasksArr
+        };
+        storage.persistItem(listData);
     }
     createComponents(){
-        this.titleTextarea.value = this.option.listTitle;
+        this.titleTextarea.value = this.option.name ? this.option.name : this.option.listTitle ;
         this.composerLink.textContent = 'Add new task...';
         this.btnAddTask.textContent = "Add";
         this.btnCanselComposer.textContent = "Cansel";
@@ -130,6 +136,11 @@ class ToDoList{
             }
         });
         this.list.dispatchEvent(updateTitle);
+        storage.updateItem(this.id, {
+            name: this.titleName,
+            id: this.id,
+            tasksArr: this.tasksArr
+        });
     }
     onComposerLinkClick(){
         this.composerLink.classList.add('is-hidden');
@@ -147,6 +158,12 @@ class ToDoList{
             task.classList.add('list__item');
             this.listItemsContainer.appendChild(task);
             this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
+            storage.updateItem(this.id, {
+                name: this.titleName,
+                id: this.id,
+                tasksArr: this.tasksArr
+            });
+            //this.option.onUpdate(this.tasksArr);
             console.log(this.tasksArr);
             this.closeComposer();
         }else {
@@ -155,20 +172,34 @@ class ToDoList{
         // this.tasksArr.add()
 
     }
+    addStoredTasks(){
+        this.tasksArr = this.tasksArr.map((item) => {
+            const task = document.createElement('div');
+            task.classList.add('list__item');
+            this.listItemsContainer.appendChild(task);
+            return new ToDoListItem(task, item.name, {
+                id: item.id,
+                isDone: item.isDone
+            });
+        });
+    }
     deleteTask(e) {
         const taskId = e.detail.id;
         this.tasksArr = this.tasksArr.filter((elem)=>{
             return elem.id !== taskId;
         });
+        storage.updateItem(this.id, {
+            name: this.titleName,
+            id: this.id,
+            tasksArr: this.tasksArr
+        });
     }
     changeTaskName(e){
-        console.log(this.tasksArr);
-    }
-    initLocalStorage(){
-
-    }
-    updateLocalStorage(){
-        localStorage.setItem('hello', 'kitty');
+        storage.updateItem(this.id, {
+            name: this.titleName,
+            id: this.id,
+            tasksArr: this.tasksArr
+        });
     }
     clearAllTasks(){
         const TaskNodes = this.listItemsContainer.querySelectorAll('.list__item');
@@ -184,6 +215,7 @@ class ToDoList{
         });
         this.list.dispatchEvent(eventRemoveList);
         this.list.remove();
+        storage.forgetItem(this.id);
     }
     recount(){
         this.list
