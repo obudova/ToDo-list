@@ -19,6 +19,10 @@ class ToDoListItem {
         this._isDeleted = false;
         this.id = Date.now();
         this.options = Object.assign({}, defaultOptions, options);
+        if(options){
+            this.id = options.id;
+            this._isDone = options.isDone;
+        }
         this.init();
     }
     get isDone(){
