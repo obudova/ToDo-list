@@ -148,3 +148,18 @@
     }
   }
 }
+.counter-done{
+  display: inline-block;
+}
+@media (max-width: 540px) {
+  .board{
+    .todo-list-board{
+      padding: 0;
+      .list{
+        margin: 0 calc((100vw - 300px)/2);
+      }
+    }
+  }
+
+
+}

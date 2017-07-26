@@ -9,13 +9,13 @@ class Storage {
         this.setStorage(storage);
     }
 
-    updateItem(itemId, item){
+    updateItem(list){
         const todos = this.getStorage();
         function isMatch(item) {
-            return item.id == itemId
+            return item.id == list.id
         }
         const index = todos.findIndex(isMatch);
-        todos[index] = item;
+        todos[index] = list;
         this.setStorage(todos);
     }
 
