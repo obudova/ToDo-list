@@ -10,19 +10,17 @@ const Template = `
     <a class="btn-remove-list"></a>
 </div>
 <div class="list__items">
-    <div class="composer__container is-hidden">
-        <textarea class="list__item__composer-textarea"></textarea>
-        <button class="btn-add-task"></button>
-        <button class="btn-cansel-add-task"></button>
+    <div class="composer__container list__item">
+        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>
+        <!--<button class="btn-add-task"></button>-->
+        <!--<button class="btn-cansel-add-task"></button>-->
     </div>
-    <a  class="open-list-composer"></a>
 </div>
 <div class="list__controls">
     <a  class="btn-clear-all">Clear All</a>
+    <label for="">Left tasks: </label>
     <div class="counter-done"></div>
 </div>
-
-
 `;
 
 const ENTER_KEYCODE = 13;
@@ -44,7 +42,6 @@ class ToDoList{
         this.listItemsContainer = this.list.querySelector('.list__items');
 
         this.composerContainer = this.list.querySelector('.composer__container');
-        this.composerLink = this.list.querySelector('.open-list-composer');
         this.composerTextarea =this.composerContainer.querySelector('.list__item__composer-textarea');
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
@@ -55,9 +52,7 @@ class ToDoList{
         this.id = Date.now();
         this.tasksArr = [];
 
-        this.dataMap = [];
         if(options){
-            console.log(options);
             this.titleName = options.name;
             this.id = options.id;
             this.tasksArr = options.tasksArr;
@@ -65,55 +60,63 @@ class ToDoList{
                 this.addStoredTasks();
             }
         }else {
-            console.log("No options");
             this.addToStorage();
         }
         this.init();
     }
+
     init(){
-        console.log(this.list);
         this.list.classList.add('list');
         this.list.setAttribute('id', this.id);
         this.createComponents();
         this.initEvents();
     }
+
     addToStorage(){
-        console.log('Storage Work!');
-        const listData = {
-            name: this.titleName,
-            id: this.id,
-            tasksArr: this.tasksArr
-        };
-        storage.persistItem(listData);
+        const listCreated = new CustomEvent('listCreated', {
+            bubbles: true,
+            detail: {
+                name: this.titleName,
+                id: this.id,
+                tasksArr: this.tasksArr
+            }
+        });
+        this.list.dispatchEvent(listCreated);
     }
+
+    onUpdate(){
+        this.recount();
+        const listUpdated = new CustomEvent('listUpdated', {
+            bubbles: true,
+            detail: {
+                name: this.titleName,
+                id: this.id,
+                tasksArr: this.tasksArr
+            }
+        });
+        this.list.dispatchEvent(listUpdated);
+    }
+
     createComponents(){
         this.titleTextarea.value = this.option.name ? this.option.name : this.option.listTitle ;
-        this.composerLink.textContent = 'Add new task...';
-        this.btnAddTask.textContent = "Add";
-        this.btnCanselComposer.textContent = "Cansel";
-        this.list
-            .querySelector('.counter-done')
-            .textContent = 0;
-
+        this.recount();
     }
+
     initEvents(){
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
-        this.composerLink.addEventListener('click', this.onComposerLinkClick.bind(this));
         this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
         this.btnAddTask.addEventListener('click', this.addTask.bind(this));
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
-        this.listItemsContainer.addEventListener('keydown', (e)=>{
+        // this.composerTextarea.addEventListener();
+        this.composerTextarea.addEventListener('keydown', (e)=>{
            if(e.keyCode==ENTER_KEYCODE){
                this.addTask.bind(this)();
            }
         });
-        this.listItemsContainer.addEventListener('complete', (e)=>{
-            this.recount(e);
-        });
-        this.listItemsContainer.addEventListener('incomplete', (e)=>{
-            this.recount(e);
+        this.listItemsContainer.addEventListener('taskToggled', (e)=>{
+            this.onUpdate(e);
         });
         this.listItemsContainer.addEventListener('delete', (e)=>{
             this.deleteTask(e);
@@ -122,11 +125,13 @@ class ToDoList{
             this.changeTaskName(e);
         })
     }
+
     onTitleClick(){
         this.titleTarget.classList.add('is-hidden');
         this.titleTextarea.focus();
         this.titleTextarea.select();
     }
+
     onTextareaBlur(){
         this.titleName=this.titleTextarea.value;
         this.titleTarget.classList.remove('is-hidden');
@@ -137,92 +142,79 @@ class ToDoList{
             }
         });
         this.list.dispatchEvent(updateTitle);
-        storage.updateItem(this.id, {
-            name: this.titleName,
-            id: this.id,
-            tasksArr: this.tasksArr
-        });
+        this.onUpdate();
     }
+
     onComposerLinkClick(){
-        this.composerLink.classList.add('is-hidden');
         this.composerContainer.classList.remove('is-hidden');
         this.composerTextarea.focus();
     }
+
     closeComposer(){
         this.composerContainer.classList.add('is-hidden');
-        this.composerLink.classList.remove('is-hidden');
         this.composerTextarea.value = "";
     }
+
     addTask(){
         if(this.composerTextarea.value){
             const task = document.createElement('div');
             task.classList.add('list__item');
-            this.listItemsContainer.appendChild(task);
+            this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
-            storage.updateItem(this.id, {
-                name: this.titleName,
-                id: this.id,
-                tasksArr: this.tasksArr
-            });
-            //this.option.onUpdate(this.tasksArr);
-            console.log(this.tasksArr);
+            this.onUpdate();
             this.closeComposer();
         }else {
             alert('Task field is empty')
         }
-        // this.tasksArr.add()
-
     }
+
     addStoredTasks(){
         this.tasksArr = this.tasksArr.map((item) => {
             const task = document.createElement('div');
             task.classList.add('list__item');
-            this.listItemsContainer.appendChild(task);
+            this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             return new ToDoListItem(task, item.name, {
                 id: item.id,
-                isDone: item.isDone
+                isDone: item._isDone
             });
         });
     }
+
     deleteTask(e) {
         const taskId = e.detail.id;
         this.tasksArr = this.tasksArr.filter((elem)=>{
             return elem.id !== taskId;
         });
-        storage.updateItem(this.id, {
-            name: this.titleName,
-            id: this.id,
-            tasksArr: this.tasksArr
-        });
+        this.onUpdate();
     }
+
     changeTaskName(e){
-        storage.updateItem(this.id, {
-            name: this.titleName,
-            id: this.id,
-            tasksArr: this.tasksArr
-        });
+       this.onUpdate();
     }
+
     clearAllTasks(){
         const TaskNodes = this.listItemsContainer.querySelectorAll('.list__item');
         TaskNodes.forEach((elem) =>{
             elem.remove();
         });
         this.tasksArr = [];
+        this.onUpdate();
     }
+
     removeList(){
-        const eventRemoveList = new CustomEvent('removeList', {
+        const eventRemoveList = new CustomEvent('listRemoved', {
             bubbles: true,
-            detail: this
+            detail: this.id
         });
         this.list.dispatchEvent(eventRemoveList);
         this.list.remove();
-        storage.forgetItem(this.id);
     }
+
     recount(){
         this.list
             .querySelector('.counter-done')
             .textContent = this.tasksArr
-            .filter(todoListItem => todoListItem.isDone)
+            .filter(todoListItem => !todoListItem.isDone)
             .length;
     }
 }

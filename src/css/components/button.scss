@@ -45,20 +45,50 @@ a.btn-remove {
   }
 }
 .btn-remove-list{
-  background-image: url("../../src/img/cross-remove-sign.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
   height: 14px;
   width: 14px;
-  position: absolute;
-  top: 50%;
-  right: 7px;
-  transform: translateY(-50%);
   display: block;
   cursor: pointer;
+  margin-left: 10px;
+
+  &::after{
+    content: "\00d7";
+    color: #fff;
+    font-size: 24px;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 45%;
+
+
+  }
 }
 #todoBuilder{
+  background: $secondary;
   position: absolute;
   top: 8px;
-  left: 30px;
+  left: 80px;
+  border-radius: 100%;
+  padding: 0 20px;
+  z-index: 10;
+  &::after{
+    content: '+';
+    font-size: 45px;
+  }
+}
+.btn-clear-all{
+  padding-right: 20px;
+  border-right: 1px solid #8c8c8c;
+  & + label{
+    padding-left: 20px;
+  }
+}
+@media (max-width: 540px) {
+  #todoBuilder{
+    position: fixed;
+    top: 80vh;
+    left: 80vw;
+
+
+  }
+
 }

@@ -36,8 +36,11 @@ class ToDoListItem {
             this._isDone = false;
             this.undoCompleteTask();
         }
-
-       // this.item.dispatchEvent(event);
+        const onToggleItem = new CustomEvent('taskToggled', {
+            bubbles: true,
+            detail: this
+        });
+        this.listItem.dispatchEvent(onToggleItem);
     }
     init() {
         this.initDoMElements();
@@ -48,6 +51,9 @@ class ToDoListItem {
         this.listItem.setAttribute('id', this.id);
         this.nameTextarea.value = this.name;
         this.btnRemove.classList.add('btn-remove');
+        if(this.isDone){
+            this.listItem.classList.add('is-done');
+        }
     }
 
     initEvents(){
@@ -70,22 +76,10 @@ class ToDoListItem {
 
     completeTask(){
         this.listItem.classList.add('is-done');
-        const eventComplete = new CustomEvent('complete', {
-            bubbles: true,
-            detail: this
-        });
-        this.listItem.dispatchEvent(eventComplete);
-        console.log(this);
     }
 
     undoCompleteTask(){
         this.listItem.classList.remove('is-done');
-        const eventIncomplete = new CustomEvent('incomplete', {
-            bubbles: true,
-            detail: this
-        });
-        this.listItem.dispatchEvent(eventIncomplete);
-        console.log(this);
     }
 
     editItem(e){
