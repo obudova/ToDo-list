@@ -60,11 +60,13 @@ var ToDoBuilder = function () {
             this.board.addEventListener('listUpdated', this.updateList.bind(this));
             this.board.addEventListener('listCreated', this.addListToStorage.bind(this));
             this.board.addEventListener('listRemoved', this.removeListFromStorage.bind(this));
+            this.board.addEventListener('listEditing', this.hideBtnAdd.bind(this));
         }
     }, {
         key: 'updateList',
         value: function updateList(e) {
             this.storage.updateItem(e.detail);
+            this.showBtnAdd();
         }
     }, {
         key: 'addListToStorage',
@@ -88,6 +90,18 @@ var ToDoBuilder = function () {
         key: 'createList',
         value: function createList() {
             this.listsArr.push(new _todolist2.default(this.createContainerForList()));
+        }
+    }, {
+        key: 'showBtnAdd',
+        value: function showBtnAdd() {
+            if (this.button.classList.contains('is-hidden')) {
+                this.button.classList.remove('is-hidden');
+            }
+        }
+    }, {
+        key: 'hideBtnAdd',
+        value: function hideBtnAdd() {
+            this.button.classList.add('is-hidden');
         }
     }, {
         key: 'createStoredList',

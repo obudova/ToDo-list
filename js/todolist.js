@@ -131,6 +131,11 @@ var ToDoList = function () {
             });
             this.composerTextarea.addEventListener('focus', function (e) {
                 _this.btnAddTask.classList.remove('is-hidden');
+                var listEditing = new CustomEvent('listEditing', {
+                    bubbles: true,
+                    detail: {}
+                });
+                _this.list.dispatchEvent(listEditing);
             });
             this.composerTextarea.addEventListener('blur', function (e) {
                 _this.btnAddTask.classList.add('is-hidden');
