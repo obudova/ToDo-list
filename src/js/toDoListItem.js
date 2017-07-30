@@ -6,7 +6,7 @@ const listItemTemplate = `
 </div>
 <a class="btn-remove"></a>
 `;
-class ToDoListItem {
+export default class ToDoListItem {
     constructor(item, value, options) {
         this.name = value;
         this.listItem = item;
@@ -18,7 +18,7 @@ class ToDoListItem {
         this._isDone = false;
         this._isDeleted = false;
         this.id = Date.now();
-        this.options = Object.assign({}, defaultOptions, options);
+        this.options = Object.assign({}, options);
         if(options){
             this.id = options.id;
             this._isDone = options.isDone;
@@ -103,3 +103,4 @@ class ToDoListItem {
     }
 
 }
+export var __useDefault = true;
