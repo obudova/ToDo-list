@@ -105,13 +105,14 @@ class ToDoList{
     initEvents(){
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
-        this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-        this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+        // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
+        // this.btnAddTask.addEventListener('click', this.addTask.bind(this));
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         // this.composerTextarea.addEventListener();
         this.composerTextarea.addEventListener('keydown', (e)=>{
            if(e.keyCode==ENTER_KEYCODE){
+               e.preventDefault();
                this.addTask.bind(this)();
            }
         });
@@ -150,10 +151,6 @@ class ToDoList{
         this.composerTextarea.focus();
     }
 
-    closeComposer(){
-        this.composerContainer.classList.add('is-hidden');
-        this.composerTextarea.value = "";
-    }
 
     addTask(){
         if(this.composerTextarea.value){
@@ -162,7 +159,7 @@ class ToDoList{
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
             this.onUpdate();
-            this.closeComposer();
+            this.composerTextarea.value = "";
         }else {
             alert('Task field is empty')
         }
