@@ -37,10 +37,12 @@ export default class ToDoBuilder{
         this.board.addEventListener('listUpdated', this.updateList.bind(this));
         this.board.addEventListener('listCreated', this.addListToStorage.bind(this));
         this.board.addEventListener('listRemoved', this.removeListFromStorage.bind(this));
+        this.board.addEventListener('listEditing', this.hideBtnAdd.bind(this));
     }
 
     updateList(e){
         this.storage.updateItem(e.detail);
+        this.showBtnAdd();
     }
 
     addListToStorage(e){
@@ -60,6 +62,16 @@ export default class ToDoBuilder{
 
     createList() {
         this.listsArr.push(new ToDoList(this.createContainerForList()));
+    }
+
+    showBtnAdd(){
+        if(this.button.classList.contains('is-hidden')){
+            this.button.classList.remove('is-hidden')
+        }
+    }
+
+    hideBtnAdd(){
+        this.button.classList.add('is-hidden')
     }
 
     createStoredList(item){

@@ -123,6 +123,12 @@ export default class ToDoList{
         });
         this.composerTextarea.addEventListener('focus',(e)=>{
             this.btnAddTask.classList.remove('is-hidden');
+            const listEditing = new CustomEvent('listEditing', {
+                bubbles: true,
+                detail: {}
+            });
+            this.list.dispatchEvent(listEditing);
+
         });
         this.composerTextarea.addEventListener('blur',(e)=>{
             this.btnAddTask.classList.add('is-hidden');
