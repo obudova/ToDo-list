@@ -455,11 +455,7 @@ var ToDoList = function () {
             });
             this.composerTextarea.addEventListener('focus', function (e) {
                 _this.btnAddTask.classList.remove('is-hidden');
-                var listEditing = new CustomEvent('listEditing', {
-                    bubbles: true,
-                    detail: {}
-                });
-                _this.list.dispatchEvent(listEditing);
+                _this.createEventOfListEditing();
             });
             this.composerTextarea.addEventListener('blur', function (e) {
                 _this.btnAddTask.classList.add('is-hidden');
@@ -477,11 +473,21 @@ var ToDoList = function () {
             });
         }
     }, {
+        key: 'createEventOfListEditing',
+        value: function createEventOfListEditing() {
+            var listEditing = new CustomEvent('listEditing', {
+                bubbles: true,
+                detail: {}
+            });
+            this.list.dispatchEvent(listEditing);
+        }
+    }, {
         key: 'onTitleClick',
         value: function onTitleClick() {
             this.titleTarget.classList.add('is-hidden');
             this.titleTextarea.focus();
             this.titleTextarea.select();
+            this.createEventOfListEditing();
         }
     }, {
         key: 'onTextareaBlur',
@@ -514,7 +520,7 @@ var ToDoList = function () {
                 this.onUpdate();
                 this.composerTextarea.value = "";
             } else {
-                alert('Task field is empty');
+                //alert('Task field is empty')
             }
         }
     }, {
