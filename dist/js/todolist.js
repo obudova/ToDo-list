@@ -115,7 +115,11 @@ var ToDoList = function () {
             this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
             this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
             // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-            this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+            this.btnAddTask.addEventListener('click', function (e) {
+                console.log(e);
+                e.preventDefault();
+                _this.addTask.bind(_this)();
+            });
             this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
             this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
             // this.composerTextarea.addEventListener();
@@ -130,6 +134,8 @@ var ToDoList = function () {
             });
             this.composerTextarea.addEventListener('blur', function (e) {
                 _this.btnAddTask.classList.add('is-hidden');
+                _this.addTask.bind(_this)();
+                console.log('cmposer blur');
             });
             this.listItemsContainer.addEventListener('taskToggled', function (e) {
                 _this.onUpdate(e);

@@ -107,7 +107,11 @@ export default class ToDoList{
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
         // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-        this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+        this.btnAddTask.addEventListener('click', (e)=>{
+            console.log(e);
+            e.preventDefault();
+            this.addTask.bind(this)();
+        });
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         // this.composerTextarea.addEventListener();
@@ -122,6 +126,8 @@ export default class ToDoList{
         });
         this.composerTextarea.addEventListener('blur',(e)=>{
             this.btnAddTask.classList.add('is-hidden');
+            this.addTask.bind(this)();
+            console.log('cmposer blur')
         });
         this.listItemsContainer.addEventListener('taskToggled', (e)=>{
             this.onUpdate(e);
