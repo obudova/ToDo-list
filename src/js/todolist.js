@@ -13,7 +13,7 @@ const Template = `
 <div class="list__items">
     <div class="composer__container list__item">
         <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>
-        <!--<button class="btn-add-task"></button>-->
+        <button class="btn-add-task is-hidden">Add</button>
         <!--<button class="btn-cansel-add-task"></button>-->
     </div>
 </div>
@@ -107,7 +107,7 @@ export default class ToDoList{
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
         // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-        // this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+        this.btnAddTask.addEventListener('click', this.addTask.bind(this));
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         // this.composerTextarea.addEventListener();
@@ -116,6 +116,12 @@ export default class ToDoList{
                e.preventDefault();
                this.addTask.bind(this)();
            }
+        });
+        this.composerTextarea.addEventListener('focus',(e)=>{
+            this.btnAddTask.classList.remove('is-hidden');
+        });
+        this.composerTextarea.addEventListener('blur',(e)=>{
+            this.btnAddTask.classList.add('is-hidden');
         });
         this.listItemsContainer.addEventListener('taskToggled', (e)=>{
             this.onUpdate(e);
