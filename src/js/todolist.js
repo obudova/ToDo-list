@@ -123,12 +123,7 @@ export default class ToDoList{
         });
         this.composerTextarea.addEventListener('focus',(e)=>{
             this.btnAddTask.classList.remove('is-hidden');
-            const listEditing = new CustomEvent('listEditing', {
-                bubbles: true,
-                detail: {}
-            });
-            this.list.dispatchEvent(listEditing);
-
+            this.createEventOfListEditing();
         });
         this.composerTextarea.addEventListener('blur',(e)=>{
             this.btnAddTask.classList.add('is-hidden');
@@ -145,11 +140,20 @@ export default class ToDoList{
             this.changeTaskName(e);
         })
     }
+    createEventOfListEditing(){
+        const listEditing = new CustomEvent('listEditing', {
+            bubbles: true,
+            detail: {}
+        });
+        this.list.dispatchEvent(listEditing);
+
+    }
 
     onTitleClick(){
         this.titleTarget.classList.add('is-hidden');
         this.titleTextarea.focus();
         this.titleTextarea.select();
+        this.createEventOfListEditing();
     }
 
     onTextareaBlur(){
@@ -180,7 +184,7 @@ export default class ToDoList{
             this.onUpdate();
             this.composerTextarea.value = "";
         }else {
-            alert('Task field is empty')
+            //alert('Task field is empty')
         }
     }
 
