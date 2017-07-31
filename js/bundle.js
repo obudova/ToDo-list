@@ -343,7 +343,7 @@ var defaultOptions = {
     listTitle: 'my List'
 };
 
-var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container list__item">\n        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
+var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container">\n        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
 
 var ENTER_KEYCODE = 13;
 
