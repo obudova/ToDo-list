@@ -1,23 +1,11 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _todolist = require('./todolist');
-
-var _todolist2 = _interopRequireDefault(_todolist);
-
-var _storage = require('./storage');
-
-var _storage2 = _interopRequireDefault(_storage);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import ToDoList from './todolist';
+// import Storage from './storage'
 var template = '\n<button id="todoBuilder"></button>\n<div class="todo-list-board"></div>\n';
 
 var ToDoBuilder = function () {
@@ -25,7 +13,7 @@ var ToDoBuilder = function () {
         _classCallCheck(this, ToDoBuilder);
 
         this.board = board;
-        this.storage = new _storage2.default('todo-lists');
+        this.storage = new Storage('todo-lists');
         this.data = this.storage.getStorage();
         this.init();
 
@@ -89,7 +77,7 @@ var ToDoBuilder = function () {
     }, {
         key: 'createList',
         value: function createList() {
-            this.listsArr.push(new _todolist2.default(this.createContainerForList()));
+            this.listsArr.push(new ToDoList(this.createContainerForList()));
         }
     }, {
         key: 'showBtnAdd',
@@ -106,7 +94,7 @@ var ToDoBuilder = function () {
     }, {
         key: 'createStoredList',
         value: function createStoredList(item) {
-            this.listsArr.push(new _todolist2.default(this.createContainerForList(), {
+            this.listsArr.push(new ToDoList(this.createContainerForList(), {
                 name: item.name,
                 id: item.id,
                 tasksArr: item.tasksArr
@@ -116,5 +104,3 @@ var ToDoBuilder = function () {
 
     return ToDoBuilder;
 }();
-
-exports.default = ToDoBuilder;

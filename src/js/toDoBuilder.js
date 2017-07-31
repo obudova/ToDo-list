@@ -1,11 +1,11 @@
-import ToDoList from './todolist';
-import Storage from './storage'
+// import ToDoList from './todolist';
+// import Storage from './storage'
 const template = `
 <button id="todoBuilder"></button>
 <div class="todo-list-board"></div>
 `;
 
-export default class ToDoBuilder{
+class ToDoBuilder{
     constructor(board) {
         this.board = board;
         this.storage = new Storage('todo-lists');
@@ -65,13 +65,13 @@ export default class ToDoBuilder{
     }
 
     showBtnAdd(){
-        if(this.button.classList.contains('is-hidden')){
-            this.button.classList.remove('is-hidden')
-        }
+        // if(this.button.classList.contains('is-hidden')){
+        //     this.button.classList.remove('is-hidden')
+        // }
     }
 
     hideBtnAdd(){
-        this.button.classList.add('is-hidden')
+        //this.button.classList.add('is-hidden')
     }
 
     createStoredList(item){

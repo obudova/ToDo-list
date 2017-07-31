@@ -6,7 +6,7 @@ const listItemTemplate = `
 </div>
 <a class="btn-remove"></a>
 `;
-export default class ToDoListItem {
+class ToDoListItem {
     constructor(item, value, options) {
         this.name = value;
         this.listItem = item;
@@ -103,4 +103,4 @@ export default class ToDoListItem {
     }
 
 }
-export var __useDefault = true;
+// export var __useDefault = true;

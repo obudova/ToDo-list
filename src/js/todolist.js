@@ -1,4 +1,4 @@
-import ToDoListItem from './toDoListItem'
+// import ToDoListItem from './toDoListItem'
 const defaultOptions ={
     listTitle: 'my List'
 };
@@ -11,8 +11,9 @@ const Template = `
     <a class="btn-remove-list"></a>
 </div>
 <div class="list__items">
-    <div class="composer__container list__item">
-        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>
+    <div class="composer__container">
+        <label for="newTodo">New task</label>
+        <textarea class="list__item__composer-textarea" id="newTodo"></textarea>
         <button class="btn-add-task is-hidden">Add</button>
         <!--<button class="btn-cansel-add-task"></button>-->
     </div>
@@ -25,7 +26,7 @@ const Template = `
 `;
 
 const ENTER_KEYCODE = 13;
-export default class ToDoList{
+class ToDoList{
     /**
      *
      * @param list
@@ -122,11 +123,12 @@ export default class ToDoList{
            }
         });
         this.composerTextarea.addEventListener('focus',(e)=>{
-            this.btnAddTask.classList.remove('is-hidden');
+            //this.btnAddTask.classList.remove('is-hidden');
+            this.composerContainer.classList.add('is-active');
             this.createEventOfListEditing();
         });
         this.composerTextarea.addEventListener('blur',(e)=>{
-            this.btnAddTask.classList.add('is-hidden');
+            this.composerContainer.classList.remove('is-active');
             this.addTask.bind(this)();
             console.log('cmposer blur')
         });
@@ -238,5 +240,5 @@ export default class ToDoList{
             .length;
     }
 }
-export var __useDefault = true;
+// export var __useDefault = true;
 

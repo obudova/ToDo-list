@@ -50,9 +50,6 @@ table {
 .mat-elevation-3dp {
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12), 0 3px 3px -2px rgba(0, 0, 0, 0.4); }
 
-.mat-elevation-4dp {
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4); }
-
 .mat-elevation-6dp {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4); }
 
@@ -79,7 +76,8 @@ header {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: #607D8B; }
+  background: #607D8B;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4); }
   header h2 {
     font-family: 'Dancing Script', cursive;
     color: #fff;
@@ -96,16 +94,17 @@ header {
   flex-wrap: wrap; }
 
 .list {
-  width: 300px;
-  background: #fff;
-  border-radius: 3px;
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  width: 300px;
   min-width: 300px;
-  position: relative;
-  white-space: normal;
-  margin: 30px; }
+  min-height: 250px;
+  margin: 30px;
+  border-radius: 3px;
+  background: #fff;
+  white-space: normal; }
   .list__header {
     padding: 12px 10px;
     position: relative;
@@ -126,8 +125,7 @@ header {
     padding: 0 4px;
     margin: 8px 4px;
     flex-grow: 2; }
-  .list__item {
-    background-color: #e5eeff;
+  .list__item, .composer__container {
     border-bottom: 1px solid #ccc;
     border-radius: 3px;
     cursor: pointer;
@@ -138,23 +136,14 @@ header {
     z-index: 0;
     padding: 6px 6px 2px 8px;
     display: flex; }
-    .list__item__composer-textarea {
-      background: 0 0;
-      border: none;
-      box-shadow: none;
-      height: auto;
-      margin-bottom: 4px;
-      max-height: 162px;
-      min-height: 54px;
-      overflow-y: auto;
-      padding: 0; }
   .list__controls {
     padding: 8px 10px; }
 
 .is-hidden {
   display: none !important; }
 
-.list__header__input, .list__item__composer-textarea, .task-name__input {
+.list__header__input,
+.task-name__input {
   background: 0 0;
   border: none;
   border-radius: 3px;
@@ -165,12 +154,13 @@ header {
   min-height: 18px;
   padding: 3px 5px;
   resize: none;
-  max-height: 16pc;
+  max-height: 30px;
   font-family: 'Muli';
   color: rgba(0, 0, 0, 0.6);
   transition: background 85ms ease-in,border-color 85ms ease-in;
   width: 100%; }
-  .list__header__input:focus, .list__item__composer-textarea:focus, .task-name__input:focus {
+  .list__header__input:focus,
+  .task-name__input:focus {
     background-color: #fff;
     outline: none;
     color: #4d4d4d; }
@@ -178,19 +168,38 @@ header {
 .list__header__input {
   color: #fff; }
 
-.list__item__composer-textarea {
-  box-sizing: border-box;
-  background-color: inherit;
-  height: auto;
-  margin: 0;
-  padding: 3px 5px;
-  max-height: 162px;
-  font-weight: 300; }
-
 .composer__container {
   margin-bottom: 10px;
   display: flex;
-  align-items: flex-end; }
+  align-items: flex-end;
+  position: relative;
+  color: rgba(0, 0, 0, 0.6); }
+  .composer__container label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transition: all .3s ease;
+    color: #34515e; }
+    .is-active label {
+      transform: translateY(-120%);
+      font-size: 10px; }
+  .composer__container textarea {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    font-weight: 400;
+    margin: 0;
+    padding: 20px 0 0px;
+    width: 100%;
+    background: 0;
+    color: rgba(0, 0, 0, 0.6);
+    outline: none;
+    resize: none;
+    max-height: 40px;
+    overflow: hidden;
+    font-size: inherit; }
+    .is-active textarea {
+      border-bottom: 1px solid #34515e; }
 
 .checkbox {
   height: 15px;
@@ -304,6 +313,6 @@ a.btn-remove {
   #todoBuilder {
     position: fixed;
     top: 80vh;
-    left: 80vw; } }
+    left: 70vw; } }
 
 /*# sourceMappingURL=style.css.map */

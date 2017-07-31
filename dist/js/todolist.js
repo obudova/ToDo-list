@@ -1,25 +1,15 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.__useDefault = undefined;
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _toDoListItem = require('./toDoListItem');
-
-var _toDoListItem2 = _interopRequireDefault(_toDoListItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import ToDoListItem from './toDoListItem'
 var defaultOptions = {
     listTitle: 'my List'
 };
 
-var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container list__item">\n        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
+var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container">\n        <label for="newTodo">New task</label>\n        <textarea class="list__item__composer-textarea" id="newTodo"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
 
 var ENTER_KEYCODE = 13;
 
@@ -130,11 +120,12 @@ var ToDoList = function () {
                 }
             });
             this.composerTextarea.addEventListener('focus', function (e) {
-                _this.btnAddTask.classList.remove('is-hidden');
+                //this.btnAddTask.classList.remove('is-hidden');
+                _this.composerContainer.classList.add('is-active');
                 _this.createEventOfListEditing();
             });
             this.composerTextarea.addEventListener('blur', function (e) {
-                _this.btnAddTask.classList.add('is-hidden');
+                _this.composerContainer.classList.remove('is-active');
                 _this.addTask.bind(_this)();
                 console.log('cmposer blur');
             });
@@ -192,7 +183,7 @@ var ToDoList = function () {
                 var task = document.createElement('div');
                 task.classList.add('list__item');
                 this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-                this.tasksArr.push(new _toDoListItem2.default(task, this.composerTextarea.value));
+                this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
                 this.onUpdate();
                 this.composerTextarea.value = "";
             } else {
@@ -208,7 +199,7 @@ var ToDoList = function () {
                 var task = document.createElement('div');
                 task.classList.add('list__item');
                 _this2.listItemsContainer.insertBefore(task, _this2.listItemsContainer.querySelector('.composer__container'));
-                return new _toDoListItem2.default(task, item.name, {
+                return new ToDoListItem(task, item.name, {
                     id: item.id,
                     isDone: item._isDone
                 });
@@ -259,6 +250,4 @@ var ToDoList = function () {
 
     return ToDoList;
 }();
-
-exports.default = ToDoList;
-var __useDefault = exports.__useDefault = true;
+// export var __useDefault = true;

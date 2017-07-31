@@ -1,4 +1,4 @@
-export default class Storage {
+ class Storage {
     constructor(storageKey) {
         this.storageKey = storageKey;
     }
