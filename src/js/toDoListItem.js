@@ -6,7 +6,7 @@ const listItemTemplate = `
 </div>
 <a class="btn-remove"></a>
 `;
-class ToDoListItem {
+export default class ToDoListItem {
     constructor(item, value, options) {
         this.name = value;
         this.listItem = item;

@@ -166,14 +166,14 @@ var ToDoBuilder = function () {
     }, {
         key: 'showBtnAdd',
         value: function showBtnAdd() {
-            if (this.button.classList.contains('is-hidden')) {
-                this.button.classList.remove('is-hidden');
-            }
+            // if(this.button.classList.contains('is-hidden')){
+            //     this.button.classList.remove('is-hidden')
+            // }
         }
     }, {
         key: 'hideBtnAdd',
         value: function hideBtnAdd() {
-            this.button.classList.add('is-hidden');
+            //this.button.classList.add('is-hidden')
         }
     }, {
         key: 'createStoredList',
@@ -318,16 +318,16 @@ var ToDoListItem = function () {
 
     return ToDoListItem;
 }();
+// export var __useDefault = true;
+
 
 exports.default = ToDoListItem;
-var __useDefault = exports.__useDefault = true;
 },{}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.__useDefault = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -343,7 +343,7 @@ var defaultOptions = {
     listTitle: 'my List'
 };
 
-var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container">\n        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
+var Template = '\n\n<div class="list__header">\n    <div class="list__header__target"></div>\n    <textarea class="list__header__input"></textarea>\n    <a class="btn-remove-list"></a>\n</div>\n<div class="list__items">\n    <div class="composer__container">\n        <label for="newTodo">New task</label>\n        <textarea class="list__item__composer-textarea" id="newTodo"></textarea>\n        <button class="btn-add-task is-hidden">Add</button>\n        <!--<button class="btn-cansel-add-task"></button>-->\n    </div>\n</div>\n<div class="list__controls">\n    <a  class="btn-clear-all">Clear All</a>\n    <label for="">Left tasks: </label>\n    <div class="counter-done"></div>\n</div>\n';
 
 var ENTER_KEYCODE = 13;
 
@@ -454,11 +454,12 @@ var ToDoList = function () {
                 }
             });
             this.composerTextarea.addEventListener('focus', function (e) {
-                _this.btnAddTask.classList.remove('is-hidden');
+                //this.btnAddTask.classList.remove('is-hidden');
+                _this.composerContainer.classList.add('is-active');
                 _this.createEventOfListEditing();
             });
             this.composerTextarea.addEventListener('blur', function (e) {
-                _this.btnAddTask.classList.add('is-hidden');
+                _this.composerContainer.classList.remove('is-active');
                 _this.addTask.bind(_this)();
                 console.log('cmposer blur');
             });
@@ -583,7 +584,8 @@ var ToDoList = function () {
 
     return ToDoList;
 }();
+// export var __useDefault = true;
+
 
 exports.default = ToDoList;
-var __useDefault = exports.__useDefault = true;
 },{"./toDoListItem":4}]},{},[1]);

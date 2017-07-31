@@ -1,11 +1,11 @@
-// import ToDoList from './todolist';
-// import Storage from './storage'
+import ToDoList from './todolist';
+import Storage from './storage'
 const template = `
 <button id="todoBuilder"></button>
 <div class="todo-list-board"></div>
 `;
 
-class ToDoBuilder{
+export default class ToDoBuilder{
     constructor(board) {
         this.board = board;
         this.storage = new Storage('todo-lists');

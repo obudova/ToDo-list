@@ -1,4 +1,4 @@
-// import ToDoListItem from './toDoListItem'
+import ToDoListItem from './toDoListItem'
 const defaultOptions ={
     listTitle: 'my List'
 };
@@ -26,7 +26,7 @@ const Template = `
 `;
 
 const ENTER_KEYCODE = 13;
-class ToDoList{
+export default class ToDoList{
     /**
      *
      * @param list
