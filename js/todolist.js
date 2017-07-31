@@ -1,10 +1,19 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _toDoListItem = require('./toDoListItem');
+
+var _toDoListItem2 = _interopRequireDefault(_toDoListItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import ToDoListItem from './toDoListItem'
 var defaultOptions = {
     listTitle: 'my List'
 };
@@ -183,7 +192,7 @@ var ToDoList = function () {
                 var task = document.createElement('div');
                 task.classList.add('list__item');
                 this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-                this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
+                this.tasksArr.push(new _toDoListItem2.default(task, this.composerTextarea.value));
                 this.onUpdate();
                 this.composerTextarea.value = "";
             } else {
@@ -199,7 +208,7 @@ var ToDoList = function () {
                 var task = document.createElement('div');
                 task.classList.add('list__item');
                 _this2.listItemsContainer.insertBefore(task, _this2.listItemsContainer.querySelector('.composer__container'));
-                return new ToDoListItem(task, item.name, {
+                return new _toDoListItem2.default(task, item.name, {
                     id: item.id,
                     isDone: item._isDone
                 });
@@ -251,3 +260,6 @@ var ToDoList = function () {
     return ToDoList;
 }();
 // export var __useDefault = true;
+
+
+exports.default = ToDoList;
