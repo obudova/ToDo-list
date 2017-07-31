@@ -5,10 +5,15 @@ var _toDoBuilder = require('./toDoBuilder');
 
 var _toDoBuilder2 = _interopRequireDefault(_toDoBuilder);
 
+var _sw = require('./sw');
+
+var _sw2 = _interopRequireDefault(_sw);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var builder = new _toDoBuilder2.default(document.querySelector('.board'));
-},{"./toDoBuilder":3}],2:[function(require,module,exports){
+(0, _sw2.default)();
+},{"./sw":3,"./toDoBuilder":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -70,6 +75,22 @@ var Storage = function () {
 
 exports.default = Storage;
 },{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function () {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register('sw.js').then(function () {
+            console.log('OK');
+        }, function (e) {
+            console.log(e);
+        });
+    }
+};
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -190,7 +211,7 @@ var ToDoBuilder = function () {
 }();
 
 exports.default = ToDoBuilder;
-},{"./storage":2,"./todolist":5}],4:[function(require,module,exports){
+},{"./storage":2,"./todolist":6}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -322,7 +343,7 @@ var ToDoListItem = function () {
 
 
 exports.default = ToDoListItem;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -588,4 +609,4 @@ var ToDoList = function () {
 
 
 exports.default = ToDoList;
-},{"./toDoListItem":4}]},{},[1]);
+},{"./toDoListItem":5}]},{},[1]);
