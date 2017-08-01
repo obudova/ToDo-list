@@ -1,62 +1,52 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var listItemTemplate = '\n<div class="checkbox"></div>\n<div class="task-name__container">\n    <div class="task-name__target"></div>\n    <textarea class="task-name__input"></textarea>\n</div>\n<a class="btn-remove"></a>\n';
+
 var ToDoListItem = function () {
-    function ToDoListItem(value, options) {
+    function ToDoListItem(item, value, options) {
         _classCallCheck(this, ToDoListItem);
 
         this.name = value;
-        this.listItem = null;
-        this.checkbox = null;
-        this.nameTarget = null;
-        this.nameTextarea = null;
-        this.btnRemove = null;
+        this.listItem = item;
+        this.listItem.innerHTML = listItemTemplate;
+        this.checkbox = this.listItem.querySelector('.checkbox');
+        this.nameTarget = this.listItem.querySelector('.task-name__target');
+        this.nameTextarea = this.listItem.querySelector('.task-name__input');
+        this.btnRemove = this.listItem.querySelector('.btn-remove');
         this._isDone = false;
         this._isDeleted = false;
         this.id = Date.now();
-        this.options = Object.assign({}, defaultOptions, options);
+        this.options = Object.assign({}, options);
+        if (options) {
+            this.id = options.id;
+            this._isDone = options.isDone;
+        }
         this.init();
     }
 
     _createClass(ToDoListItem, [{
         key: 'init',
         value: function init() {
-            this.createDoMElements();
+            this.initDoMElements();
             this.initEvents();
-            this.onResolve();
         }
     }, {
-        key: 'createDoMElements',
-        value: function createDoMElements() {
-            this.listItem = document.createElement('div');
-            this.listItem.classList.add('list__item');
+        key: 'initDoMElements',
+        value: function initDoMElements() {
             this.listItem.setAttribute('id', this.id);
-
-            this.checkbox = document.createElement('div');
-            this.checkbox.setAttribute('class', 'checkbox');
-
-            var nameContainer = document.createElement('div');
-            nameContainer.classList.add('task-name__container');
-
-            this.nameTarget = document.createElement('div');
-            this.nameTarget.classList.add('task-name__target');
-            nameContainer.appendChild(this.nameTarget);
-
-            this.nameTextarea = document.createElement('textarea');
-            this.nameTextarea.classList.add('task-name__input');
             this.nameTextarea.value = this.name;
-            nameContainer.appendChild(this.nameTextarea);
-
-            this.btnRemove = document.createElement('a');
             this.btnRemove.classList.add('btn-remove');
-
-            this.listItem.appendChild(this.checkbox);
-            // this.listItem.appendChild(span);
-            this.listItem.appendChild(nameContainer);
-            this.listItem.appendChild(this.btnRemove);
+            if (this.isDone) {
+                this.listItem.classList.add('is-done');
+            }
         }
     }, {
         key: 'initEvents',
@@ -78,24 +68,17 @@ var ToDoListItem = function () {
                 detail: this
             });
             this.listItem.dispatchEvent(eventDelete);
+            this.listItem.remove();
         }
     }, {
         key: 'completeTask',
         value: function completeTask() {
-            var eventComplete = new CustomEvent('complete', {
-                bubbles: true,
-                detail: this
-            });
-            this.listItem.dispatchEvent(eventComplete);
+            this.listItem.classList.add('is-done');
         }
     }, {
         key: 'undoCompleteTask',
         value: function undoCompleteTask() {
-            var eventIncomplete = new CustomEvent('incomplete', {
-                bubbles: true,
-                detail: this
-            });
-            this.listItem.dispatchEvent(eventIncomplete);
+            this.listItem.classList.remove('is-done');
         }
     }, {
         key: 'editItem',
@@ -120,17 +103,6 @@ var ToDoListItem = function () {
             this.listItem.dispatchEvent(nameChanged);
         }
     }, {
-        key: 'onResolve',
-        value: function onResolve() {
-            var name = this.name;
-            var id = this.id;
-            var task = {
-                name: name,
-                id: id
-            };
-            this.options.onResolve && this.options.onResolve.call(this, this.listItem, task);
-        }
-    }, {
         key: 'isDone',
         get: function get() {
             return this._isDone;
@@ -143,8 +115,17 @@ var ToDoListItem = function () {
                 this._isDone = false;
                 this.undoCompleteTask();
             }
+            var onToggleItem = new CustomEvent('taskToggled', {
+                bubbles: true,
+                detail: this
+            });
+            this.listItem.dispatchEvent(onToggleItem);
         }
     }]);
 
     return ToDoListItem;
 }();
+// export var __useDefault = true;
+
+
+exports.default = ToDoListItem;

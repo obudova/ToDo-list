@@ -1,3 +1,4 @@
+import ToDoListItem from './toDoListItem'
 const defaultOptions ={
     listTitle: 'my List'
 };
@@ -10,9 +11,10 @@ const Template = `
     <a class="btn-remove-list"></a>
 </div>
 <div class="list__items">
-    <div class="composer__container list__item">
-        <textarea class="list__item__composer-textarea" placeholder="New task"></textarea>
-        <!--<button class="btn-add-task"></button>-->
+    <div class="composer__container">
+        <label for="newTodo">New task</label>
+        <textarea class="list__item__composer-textarea" id="newTodo"></textarea>
+        <button class="btn-add-task is-hidden">Add</button>
         <!--<button class="btn-cansel-add-task"></button>-->
     </div>
 </div>
@@ -24,7 +26,7 @@ const Template = `
 `;
 
 const ENTER_KEYCODE = 13;
-class ToDoList{
+export default class ToDoList{
     /**
      *
      * @param list
@@ -105,15 +107,30 @@ class ToDoList{
     initEvents(){
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
-        this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-        this.btnAddTask.addEventListener('click', this.addTask.bind(this));
+        // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
+        this.btnAddTask.addEventListener('click', (e)=>{
+            console.log(e);
+            e.preventDefault();
+            this.addTask.bind(this)();
+        });
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         // this.composerTextarea.addEventListener();
         this.composerTextarea.addEventListener('keydown', (e)=>{
            if(e.keyCode==ENTER_KEYCODE){
+               e.preventDefault();
                this.addTask.bind(this)();
            }
+        });
+        this.composerTextarea.addEventListener('focus',(e)=>{
+            //this.btnAddTask.classList.remove('is-hidden');
+            this.composerContainer.classList.add('is-active');
+            this.createEventOfListEditing();
+        });
+        this.composerTextarea.addEventListener('blur',(e)=>{
+            this.composerContainer.classList.remove('is-active');
+            this.addTask.bind(this)();
+            console.log('cmposer blur')
         });
         this.listItemsContainer.addEventListener('taskToggled', (e)=>{
             this.onUpdate(e);
@@ -125,11 +142,20 @@ class ToDoList{
             this.changeTaskName(e);
         })
     }
+    createEventOfListEditing(){
+        const listEditing = new CustomEvent('listEditing', {
+            bubbles: true,
+            detail: {}
+        });
+        this.list.dispatchEvent(listEditing);
+
+    }
 
     onTitleClick(){
         this.titleTarget.classList.add('is-hidden');
         this.titleTextarea.focus();
         this.titleTextarea.select();
+        this.createEventOfListEditing();
     }
 
     onTextareaBlur(){
@@ -150,10 +176,6 @@ class ToDoList{
         this.composerTextarea.focus();
     }
 
-    closeComposer(){
-        this.composerContainer.classList.add('is-hidden');
-        this.composerTextarea.value = "";
-    }
 
     addTask(){
         if(this.composerTextarea.value){
@@ -162,9 +184,9 @@ class ToDoList{
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
             this.onUpdate();
-            this.closeComposer();
+            this.composerTextarea.value = "";
         }else {
-            alert('Task field is empty')
+            //alert('Task field is empty')
         }
     }
 
@@ -218,4 +240,5 @@ class ToDoList{
             .length;
     }
 }
+// export var __useDefault = true;
 

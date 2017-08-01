@@ -1,9 +1,11 @@
+import ToDoList from './todolist';
+import Storage from './storage'
 const template = `
 <button id="todoBuilder"></button>
 <div class="todo-list-board"></div>
 `;
 
-class ToDoBuilder{
+export default class ToDoBuilder{
     constructor(board) {
         this.board = board;
         this.storage = new Storage('todo-lists');
@@ -35,10 +37,12 @@ class ToDoBuilder{
         this.board.addEventListener('listUpdated', this.updateList.bind(this));
         this.board.addEventListener('listCreated', this.addListToStorage.bind(this));
         this.board.addEventListener('listRemoved', this.removeListFromStorage.bind(this));
+        this.board.addEventListener('listEditing', this.hideBtnAdd.bind(this));
     }
 
     updateList(e){
         this.storage.updateItem(e.detail);
+        this.showBtnAdd();
     }
 
     addListToStorage(e){
@@ -58,6 +62,16 @@ class ToDoBuilder{
 
     createList() {
         this.listsArr.push(new ToDoList(this.createContainerForList()));
+    }
+
+    showBtnAdd(){
+        // if(this.button.classList.contains('is-hidden')){
+        //     this.button.classList.remove('is-hidden')
+        // }
+    }
+
+    hideBtnAdd(){
+        //this.button.classList.add('is-hidden')
     }
 
     createStoredList(item){
