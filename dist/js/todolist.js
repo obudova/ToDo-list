@@ -123,7 +123,7 @@ var ToDoList = function () {
             this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
             // this.composerTextarea.addEventListener();
             this.composerTextarea.addEventListener('keydown', function (e) {
-                if (e.keyCode == ENTER_KEYCODE) {
+                if (e.keyCode === ENTER_KEYCODE) {
                     e.preventDefault();
                     _this.addTask.bind(_this)();
                 }
@@ -251,7 +251,7 @@ var ToDoList = function () {
     }, {
         key: 'recount',
         value: function recount() {
-            this.list.querySelector('.counter-done').textContent = this.tasksArr.filter(function (todoListItem) {
+            this.list.querySelector('.counter-done').innerHTML = this.tasksArr.filter(function (todoListItem) {
                 return !todoListItem.isDone;
             }).length;
         }
