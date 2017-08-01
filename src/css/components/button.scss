@@ -7,7 +7,6 @@ button {
   border-radius: .2em;
   box-shadow: 0 .05em .25em rgba(0, 0, 0, .5);
   color: white;
-  text-shadow: 0 -.05em .05em rgba(0, 0, 0, .5);
   font-size: 100%;
   line-height: 1.5;
   cursor: pointer;
@@ -65,14 +64,20 @@ a.btn-remove {
 #todoBuilder{
   background: $secondary;
   position: absolute;
-  top: 8px;
+  top: 25px;
   left: 80px;
   border-radius: 100%;
-  padding: 0 20px;
+  padding: 18px;
   z-index: 10;
+  color: #fff;
   &::after{
-    content: '+';
-    font-size: 45px;
+    content: "";
+    background-image: url("../../src/img/add.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+    height: 24px;
+    width: 24px;
   }
 }
 .btn-clear-all{
@@ -83,12 +88,9 @@ a.btn-remove {
   }
 }
 @media (max-width: 540px) {
-  #todoBuilder{
+  #todoBuilder {
     position: fixed;
     top: 80vh;
-    left: 70vw;
-
-
+    left: calc(100vw - 15vh);
   }
-
 }
