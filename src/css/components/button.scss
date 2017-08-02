@@ -93,7 +93,8 @@ a.btn-remove {
   #todoBuilder {
     position: fixed;
     top: calc(100vh - 64px);
-    left: calc(100vh - 64px);
+    left: calc(100vw - 64px);
+    padding: 15px;
 
   }
 }
