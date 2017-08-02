@@ -7,19 +7,33 @@ var _toDoBuilder2 = _interopRequireDefault(_toDoBuilder);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import serviceWorker from './sw';
 new _toDoBuilder2.default(document.querySelector('.board'));
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', function() {
-//         navigator.serviceWorker.register('sw.js').then(function(registration) {
-//             // Registration was successful
-//             console.log('ServiceWorker registration successful with scope: ', registration.scope);
-//         }, function(err) {
-//             // registration failed :(
-//             console.log('ServiceWorker registration failed: ', err);
-//         });
-//     });
-// }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').then(function (registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}
+function showNotification() {
+    Notification.requestPermission(function (result) {
+        if (result === 'granted') {
+            navigator.serviceWorker.ready.then(function (registration) {
+                registration.showNotification('Vibration Sample', {
+                    body: 'Buzz! Buzz!',
+                    icon: '../images/touch/chrome-touch-icon-192x192.png',
+                    vibrate: [200, 100, 200, 100, 200, 100, 200],
+                    tag: 'vibration-sample'
+                });
+            });
+        }
+    });
+}
+showNotification();
 },{"./toDoBuilder":3}],2:[function(require,module,exports){
 "use strict";
 
@@ -379,7 +393,6 @@ var ToDoList = function () {
 
         this.composerContainer = this.list.querySelector('.composer__container');
         this.composerTextarea = this.composerContainer.querySelector('.list__item__composer-textarea');
-        this.composerLabel = this.composerContainer.querySelector('label');
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
         this.btnClearAll = this.list.querySelector('.btn-clear-all');
@@ -457,7 +470,6 @@ var ToDoList = function () {
             });
             this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
             this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
-            // this.composerTextarea.addEventListener();
             this.composerTextarea.addEventListener('keydown', function (e) {
                 if (e.keyCode === ENTER_KEYCODE) {
                     e.preventDefault();
@@ -468,16 +480,11 @@ var ToDoList = function () {
                 //this.btnAddTask.classList.remove('is-hidden');
                 _this.composerContainer.classList.add('is-active');
                 _this.createEventOfListEditing();
-                console.log(_this);
             });
             this.composerTextarea.addEventListener('blur', function (e) {
                 _this.composerContainer.classList.remove('is-active');
                 _this.addTask.bind(_this)();
                 console.log('cmposer blur');
-            });
-            this.composerLabel.addEventListener('click', function (e) {
-                console.log(e);
-                _this.composerTextarea.focus();
             });
             this.listItemsContainer.addEventListener('taskToggled', function (e) {
                 _this.onUpdate(e);
@@ -525,6 +532,11 @@ var ToDoList = function () {
         value: function onComposerLinkClick() {
             this.composerContainer.classList.remove('is-hidden');
             this.composerTextarea.focus();
+        }
+    }, {
+        key: 'onComposerLabelClick',
+        value: function onComposerLabelClick(e) {
+            console.log(this);
         }
     }, {
         key: 'addTask',
