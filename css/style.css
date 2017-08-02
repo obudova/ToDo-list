@@ -179,7 +179,8 @@ header {
     top: 50%;
     left: 10px;
     transition: all .3s ease;
-    color: #34515e; }
+    color: #34515e;
+    pointer-events: none; }
     .is-active label {
       transform: translateY(-120%);
       font-size: 10px; }

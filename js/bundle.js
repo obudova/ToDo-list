@@ -8,18 +8,18 @@ var _toDoBuilder2 = _interopRequireDefault(_toDoBuilder);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import serviceWorker from './sw';
-var builder = new _toDoBuilder2.default(document.querySelector('.board'));
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').then(function (registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
-        });
-    });
-}
+new _toDoBuilder2.default(document.querySelector('.board'));
+// if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', function() {
+//         navigator.serviceWorker.register('sw.js').then(function(registration) {
+//             // Registration was successful
+//             console.log('ServiceWorker registration successful with scope: ', registration.scope);
+//         }, function(err) {
+//             // registration failed :(
+//             console.log('ServiceWorker registration failed: ', err);
+//         });
+//     });
+// }
 },{"./toDoBuilder":3}],2:[function(require,module,exports){
 "use strict";
 
@@ -49,10 +49,9 @@ var Storage = function () {
         key: "updateItem",
         value: function updateItem(list) {
             var todos = this.getStorage();
-            function isMatch(item) {
-                return item.id == list.id;
-            }
-            var index = todos.findIndex(isMatch);
+            var index = todos.findIndex(function (item) {
+                return item.id === list.id;
+            });
             todos[index] = list;
             this.setStorage(todos);
         }
@@ -380,9 +379,9 @@ var ToDoList = function () {
 
         this.composerContainer = this.list.querySelector('.composer__container');
         this.composerTextarea = this.composerContainer.querySelector('.list__item__composer-textarea');
+        this.composerLabel = this.composerContainer.querySelector('label');
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
-        this.btnCanselComposer = this.composerContainer.querySelector('.btn-cansel-add-task');
         this.btnClearAll = this.list.querySelector('.btn-clear-all');
 
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
@@ -460,7 +459,7 @@ var ToDoList = function () {
             this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
             // this.composerTextarea.addEventListener();
             this.composerTextarea.addEventListener('keydown', function (e) {
-                if (e.keyCode == ENTER_KEYCODE) {
+                if (e.keyCode === ENTER_KEYCODE) {
                     e.preventDefault();
                     _this.addTask.bind(_this)();
                 }
@@ -469,11 +468,16 @@ var ToDoList = function () {
                 //this.btnAddTask.classList.remove('is-hidden');
                 _this.composerContainer.classList.add('is-active');
                 _this.createEventOfListEditing();
+                console.log(_this);
             });
             this.composerTextarea.addEventListener('blur', function (e) {
                 _this.composerContainer.classList.remove('is-active');
                 _this.addTask.bind(_this)();
                 console.log('cmposer blur');
+            });
+            this.composerLabel.addEventListener('click', function (e) {
+                console.log(e);
+                _this.composerTextarea.focus();
             });
             this.listItemsContainer.addEventListener('taskToggled', function (e) {
                 _this.onUpdate(e);
@@ -588,7 +592,7 @@ var ToDoList = function () {
     }, {
         key: 'recount',
         value: function recount() {
-            this.list.querySelector('.counter-done').textContent = this.tasksArr.filter(function (todoListItem) {
+            this.list.querySelector('.counter-done').innerHTML = this.tasksArr.filter(function (todoListItem) {
                 return !todoListItem.isDone;
             }).length;
         }

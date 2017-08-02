@@ -45,7 +45,6 @@ var ToDoList = function () {
         this.composerTextarea = this.composerContainer.querySelector('.list__item__composer-textarea');
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
-        this.btnCanselComposer = this.composerContainer.querySelector('.btn-cansel-add-task');
         this.btnClearAll = this.list.querySelector('.btn-clear-all');
 
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
@@ -121,7 +120,6 @@ var ToDoList = function () {
             });
             this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
             this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
-            // this.composerTextarea.addEventListener();
             this.composerTextarea.addEventListener('keydown', function (e) {
                 if (e.keyCode === ENTER_KEYCODE) {
                     e.preventDefault();
@@ -184,6 +182,11 @@ var ToDoList = function () {
         value: function onComposerLinkClick() {
             this.composerContainer.classList.remove('is-hidden');
             this.composerTextarea.focus();
+        }
+    }, {
+        key: 'onComposerLabelClick',
+        value: function onComposerLabelClick(e) {
+            console.log(this);
         }
     }, {
         key: 'addTask',

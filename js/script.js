@@ -6,8 +6,7 @@ var _toDoBuilder2 = _interopRequireDefault(_toDoBuilder);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import serviceWorker from './sw';
-var builder = new _toDoBuilder2.default(document.querySelector('.board'));
+new _toDoBuilder2.default(document.querySelector('.board'));
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker.register('sw.js').then(function (registration) {
@@ -19,3 +18,18 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+function showNotification() {
+    Notification.requestPermission(function (result) {
+        if (result === 'granted') {
+            navigator.serviceWorker.ready.then(function (registration) {
+                registration.showNotification('Vibration Sample', {
+                    body: 'Buzz! Buzz!',
+                    icon: '../images/touch/chrome-touch-icon-192x192.png',
+                    vibrate: [200, 100, 200, 100, 200, 100, 200],
+                    tag: 'vibration-sample'
+                });
+            });
+        }
+    });
+}
+showNotification();
