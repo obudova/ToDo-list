@@ -108,6 +108,7 @@
     left: 10px;
     transition: all .3s ease;
     color: $primary-dark;
+    pointer-events: none;
 
     @at-root .is-active label{
       transform: translateY(-120%);

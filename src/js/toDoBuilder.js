@@ -1,5 +1,5 @@
 import ToDoList from './todolist';
-import Storage from './storage'
+import Storage from './storage';
 const template = `
 <button id="todoBuilder"></button>
 <div class="todo-list-board"></div>

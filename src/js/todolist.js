@@ -47,7 +47,6 @@ export default class ToDoList{
         this.composerTextarea =this.composerContainer.querySelector('.list__item__composer-textarea');
 
         this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
-        this.btnCanselComposer =  this.composerContainer.querySelector('.btn-cansel-add-task');
         this.btnClearAll = this.list.querySelector('.btn-clear-all');
 
         this.btnRemoveList = this.list.querySelector('.btn-remove-list');
@@ -115,7 +114,6 @@ export default class ToDoList{
         });
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
-        // this.composerTextarea.addEventListener();
         this.composerTextarea.addEventListener('keydown', (e)=>{
            if(e.keyCode === ENTER_KEYCODE){
                e.preventDefault();
@@ -175,7 +173,9 @@ export default class ToDoList{
         this.composerContainer.classList.remove('is-hidden');
         this.composerTextarea.focus();
     }
-
+    onComposerLabelClick(e){
+        console.log(this)
+    }
 
     addTask(){
         if(this.composerTextarea.value){
