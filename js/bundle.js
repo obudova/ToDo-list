@@ -25,7 +25,7 @@ function showNotification() {
             navigator.serviceWorker.ready.then(function (registration) {
                 registration.showNotification('Vibration Sample', {
                     body: 'Buzz! Buzz!',
-                    icon: '../../favicon-16x16.png',
+                    icon: '../../android-chrome-512x512.png',
                     vibrate: [200, 100, 200, 100, 200, 100, 200],
                     tag: 'vibration-sample'
                 });
