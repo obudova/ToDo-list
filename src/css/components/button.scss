@@ -91,7 +91,7 @@ a.btn-remove {
 }
 @media (max-width: 540px) {
   #todoBuilder {
-    position: fixed;
+    position: absolute;
     top: calc(100vh - 64px);
     left: calc(100vw - 64px);
     padding: 15px;

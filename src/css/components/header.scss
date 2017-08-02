@@ -6,9 +6,6 @@ header{
   align-items: center;
   background: #607D8B;
   @include toolbar-shadow;
-  @media (max-width: 540px) {
-    height: 75px;
-  }
   h2{
     font-family: 'Dancing Script', cursive;
     color: #fff;
