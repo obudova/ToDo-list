@@ -117,7 +117,7 @@ export default class ToDoList{
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         // this.composerTextarea.addEventListener();
         this.composerTextarea.addEventListener('keydown', (e)=>{
-           if(e.keyCode==ENTER_KEYCODE){
+           if(e.keyCode === ENTER_KEYCODE){
                e.preventDefault();
                this.addTask.bind(this)();
            }
@@ -159,7 +159,7 @@ export default class ToDoList{
     }
 
     onTextareaBlur(){
-        this.titleName=this.titleTextarea.value;
+        this.titleName = this.titleTextarea.value;
         this.titleTarget.classList.remove('is-hidden');
         const updateTitle = new CustomEvent('update',{
             bubbles: true,
@@ -235,9 +235,7 @@ export default class ToDoList{
     recount(){
         this.list
             .querySelector('.counter-done')
-            .textContent = this.tasksArr
-            .filter(todoListItem => !todoListItem.isDone)
-            .length;
+            .innerHTML = this.tasksArr.filter(todoListItem => !todoListItem.isDone).length;
     }
 }
 // export var __useDefault = true;

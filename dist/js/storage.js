@@ -26,10 +26,9 @@ var Storage = function () {
         key: "updateItem",
         value: function updateItem(list) {
             var todos = this.getStorage();
-            function isMatch(item) {
-                return item.id == list.id;
-            }
-            var index = todos.findIndex(isMatch);
+            var index = todos.findIndex(function (item) {
+                return item.id === list.id;
+            });
             todos[index] = list;
             this.setStorage(todos);
         }

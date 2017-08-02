@@ -11,10 +11,7 @@ export default class Storage {
 
     updateItem(list){
         const todos = this.getStorage();
-        function isMatch(item) {
-            return item.id == list.id
-        }
-        const index = todos.findIndex(isMatch);
+        const index = todos.findIndex(item => item.id === list.id);
         todos[index] = list;
         this.setStorage(todos);
     }
@@ -32,5 +29,4 @@ export default class Storage {
     setStorage(storage) {
         localStorage.setItem(this.storageKey, JSON.stringify(storage));
     }
-
 }

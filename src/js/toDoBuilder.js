@@ -4,7 +4,6 @@ const template = `
 <button id="todoBuilder"></button>
 <div class="todo-list-board"></div>
 `;
-
 export default class ToDoBuilder{
     constructor(board) {
         this.board = board;
