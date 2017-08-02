@@ -1,6 +1,6 @@
 import ToDoBuilder from './toDoBuilder';
 // import serviceWorker from './sw';
-let builder = new ToDoBuilder(document.querySelector('.board'));
+new ToDoBuilder(document.querySelector('.board'));
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('sw.js').then(function(registration) {

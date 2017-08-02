@@ -16,5 +16,5 @@
     "theme_color": "#0ff",
     "background_color": "#0ff",
     "start_url": "https://obudova.github.io/ToDo-list/",
-    "display": "fullscreen"
+    "display": "standalone"
 }
