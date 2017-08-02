@@ -88,7 +88,6 @@ header {
     font-weight: 800; }
 
 .board .todo-list-board {
-  height: calc(100vh - 60px);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -322,7 +321,8 @@ a.btn-remove {
 @media (max-width: 540px) {
   #todoBuilder {
     position: fixed;
-    top: 80vh;
-    left: calc(100vw - 15vh); } }
+    top: calc(100vh - 64px);
+    left: calc(100vw - 64px);
+    padding: 15px; } }
 
 /*# sourceMappingURL=style.css.map */
