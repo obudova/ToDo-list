@@ -22,7 +22,7 @@ button {
 }
 
 a.btn-remove {
-  background-image: url("../../src/img/icon-light.svg");
+  background-image: url("/src/img/icon-light.svg");
   background-size: contain;
   background-repeat: no-repeat;
   height: 16px;
@@ -74,7 +74,7 @@ a.btn-remove {
   color: #fff;
   &::after{
     content: "";
-    background-image: url("../../src/img/add.svg");
+    background-image: url("/src/img/add.svg");
     background-size: contain;
     background-repeat: no-repeat;
     display: block;

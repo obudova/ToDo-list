@@ -1,12 +1,7 @@
-'use strict';
-
-var _toDoBuilder = require('./toDoBuilder');
-
-var _toDoBuilder2 = _interopRequireDefault(_toDoBuilder);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _toDoBuilder2.default(document.querySelector('.board'));
+"use strict";
+var toDoBuilder_1 = require('./toDoBuilder');
+require('../css/style.scss');
+new toDoBuilder_1["default"](document.querySelector('.board'));
 // if ('serviceWorker' in navigator) {
 //     window.addEventListener('load', function() {
 //         navigator.serviceWorker.register('sw.js').then(function(registration) {
@@ -18,7 +13,7 @@ new _toDoBuilder2.default(document.querySelector('.board'));
 //         });
 //     });
 // }
-console.log('Yes');
+console.log('type script');
 function showNotification() {
     Notification.requestPermission(function (result) {
         if (result === 'granted') {
@@ -34,3 +29,4 @@ function showNotification() {
     });
 }
 // showNotification();
+//# sourceMappingURL=script.js.map

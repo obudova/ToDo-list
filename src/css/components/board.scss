@@ -9,7 +9,14 @@
     flex-wrap: wrap;
   }
 }
-
+@keyframes scale {
+  100%{
+    transform: scale(0.1);
+  }
+}
+.is-deleted{
+  transform: scale(0.1) !important;
+}
 .list{
   position: relative;
   box-sizing: border-box;
@@ -22,6 +29,8 @@
   border-radius: 3px;
   background: #fff;
   white-space: normal;
+  transform: scale(1);
+  transition: transform .3s ease-in;
 
   &__header{
     padding: 12px 10px;
@@ -145,7 +154,7 @@
   background-color: #fff;
 
   .is-done &{
-    background: url(../../src/img/tick.svg) #fff;
+    background: url("../../src/img/tick.svg") #fff;
     background-size: contain;
   }
 }

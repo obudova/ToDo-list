@@ -104,6 +104,7 @@ export default class ToDoList{
     }
 
     initEvents(){
+        this.list.addEventListener('transitionend', this.onRemove.bind(this));
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
         // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
@@ -229,9 +230,12 @@ export default class ToDoList{
             detail: this.id
         });
         this.list.dispatchEvent(eventRemoveList);
+        this.list.classList.add('is-deleted');
+    }
+    onRemove(e){
+        if(e.target == this.list)
         this.list.remove();
     }
-
     recount(){
         this.list
             .querySelector('.counter-done')
