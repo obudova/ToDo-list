@@ -32,7 +32,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                loader: 'file-loader?name=images/[name].[ext]'
+                loader: 'file-loader?name=../images/[name].[ext]'
             }
         ]
     },
