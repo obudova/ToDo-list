@@ -54,7 +54,7 @@ export default class ToDoBuilder{
 
     createContainerForList(){
         const list = document.createElement('div');
-        list.classList.add('todo-list', 'mat-elevation-2dp');
+        list.classList.add('todo-list');
         this.board.querySelector('.todo-list-board').appendChild(list);
         return list;
     }

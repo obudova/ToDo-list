@@ -19,9 +19,9 @@ const Template = `
     </div>
 </div>
 <div class="list__controls">
-    <a  class="btn-clear-all">Clear All</a>
     <label for="">Left tasks: </label>
     <div class="counter-done"></div>
+    <a  class="btn-clear-all">Clear All</a>
 </div>
 `;
 
@@ -104,7 +104,7 @@ export default class ToDoList{
     }
 
     initEvents(){
-        this.list.addEventListener('transitionend', this.onRemove.bind(this));
+        this.list.addEventListener('animationend', this.onRemove.bind(this));
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
         // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
@@ -233,8 +233,11 @@ export default class ToDoList{
         this.list.classList.add('is-deleted');
     }
     onRemove(e){
-        if(e.target == this.list)
-        this.list.remove();
+        console.log(e);
+        if(e.target == this.list && e.animationName === "scale"){
+            this.list.remove();
+
+        }
     }
     recount(){
         this.list

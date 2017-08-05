@@ -85,12 +85,14 @@ export default class ToDoListItem {
     editItem(e){
         this.nameTextarea.focus();
         this.nameTarget.classList.add('is-hidden');
+        this.listItem.classList.add('is-editing');
     }
 
     renameTask(e){
         const previousName = this.name;
         this.name = this.nameTextarea.value;
         this.nameTarget.classList.remove('is-hidden');
+        this.listItem.classList.remove('is-editing')
         const nameChanged = new CustomEvent('nameChanged', {
             bubbles: true,
             detail: {
