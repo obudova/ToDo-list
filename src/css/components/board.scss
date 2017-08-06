@@ -80,6 +80,7 @@
     display: flex;
     align-items: center;
     color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
   }
 }
 .is-hidden{
@@ -114,18 +115,36 @@
 }
 
 .composer__container{
-  @extend .list__item;
+  //@extend .list__item;
   margin-bottom: 10px;
   display: flex;
   align-items: flex-end;
   position: relative;
   color: rgba(0,0,0, 0.6);
+  padding: 0 8px;
+  &::after{
+    background-color: $primary-light;
+    bottom: 0;
+    content: '';
+    height: 2px;
+    width: 10px;
+    left: 45%;
+    position: absolute;
+    transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+  }
+
+  @at-root &.is-active::after{
+    visibility: visible;
+    left: 8px;
+    width: calc(100% - 16px);
+  }
   label{
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 10px;
     transition: all .3s ease;
-    color: $primary-dark;
+    color: $primary-light;
     pointer-events: none;
 
     @at-root .is-active label{
@@ -148,9 +167,8 @@
     max-height: 40px;
     overflow: hidden;
     font-size: inherit;
-    @at-root .is-active textarea{
-      border-bottom: 1px solid  $primary-dark;
-    }
+    border-bottom: 1px solid  $primary-light;
+    padding-bottom: 8px;
   }
   button{
 
@@ -200,7 +218,7 @@
 @media (max-width: 540px) {
   .board{
     .todo-list-board{
-      padding: 0 16px;
+      padding: 0 16px 64px;
     }
     .list{
       width: 100%;
