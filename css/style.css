@@ -115,7 +115,7 @@ header {
     padding: 0 4px;
     margin: 8px 4px;
     flex-grow: 2; }
-  .list__item, .composer__container {
+  .list__item {
     cursor: pointer;
     margin-bottom: 6px;
     min-height: 24px;
@@ -126,14 +126,15 @@ header {
     border-top: 1px solid transparent;
     display: flex;
     box-sizing: border-box; }
-    .list__item.is-editing, .is-editing.composer__container {
+    .list__item.is-editing {
       border-bottom: 1px solid #ccc;
       border-top: 1px solid #ccc; }
   .list__controls {
     padding: 8px 16px 4px;
     display: flex;
     align-items: center;
-    color: rgba(0, 0, 0, 0.6); }
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px; }
 
 .is-hidden {
   display: none !important; }
@@ -169,13 +170,28 @@ header {
   display: flex;
   align-items: flex-end;
   position: relative;
-  color: rgba(0, 0, 0, 0.6); }
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 8px; }
+  .composer__container::after {
+    background-color: #8eacbb;
+    bottom: 0;
+    content: '';
+    height: 2px;
+    width: 10px;
+    left: 45%;
+    position: absolute;
+    transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden; }
+  .composer__container.is-active::after {
+    visibility: visible;
+    left: 8px;
+    width: calc(100% - 16px); }
   .composer__container label {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 10px;
     transition: all .3s ease;
-    color: #34515e;
+    color: #8eacbb;
     pointer-events: none; }
     .is-active label {
       transform: translateY(-120%);
@@ -194,9 +210,9 @@ header {
     resize: none;
     max-height: 40px;
     overflow: hidden;
-    font-size: inherit; }
-    .is-active textarea {
-      border-bottom: 1px solid #34515e; }
+    font-size: inherit;
+    border-bottom: 1px solid #8eacbb;
+    padding-bottom: 8px; }
 
 .checkbox {
   height: 15px;
@@ -232,7 +248,7 @@ header {
 
 @media (max-width: 540px) {
   .board .todo-list-board {
-    padding: 0 16px; }
+    padding: 0 16px 64px; }
   .board .list {
     width: 100%; } }
 
