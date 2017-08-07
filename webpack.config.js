@@ -3,7 +3,8 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
-    webpack = require("webpack")
+    webpack = require("webpack"),
+    failPlugin = require('webpack-fail-plugin')
     ;
 module.exports = {
 
@@ -42,16 +43,18 @@ module.exports = {
         contentBase: __dirname
     },
     plugins: [
+        failPlugin,
         new CleanWebpackPlugin(['dist']),
-        //new ForkTsCheckerWebpackPlugin(),
+        new ForkTsCheckerWebpackPlugin(),
         new ExtractTextPlugin({
             filename: '../css/style.css'
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "script.js",
-            async: true,
-            children: true
-        })
+
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "script.js",
+        //     async: true,
+        //     children: true
+        // })
     ]
 
 };

@@ -4,6 +4,9 @@
     "target": "es5",
     "allowJs": true,
     "noImplicitAny": false,
-    "lib": [ "es5", "dom", "es2015"]
+    "lib": [ "es5", "dom", "es2015"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   }
 }

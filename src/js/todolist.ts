@@ -210,9 +210,10 @@ export default class ToDoList {
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             //this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
-
+            const taskName = this.composerTextarea.value;
             import('./toDoListItem').then(module => {
-                this.tasksArr.push(new module.default(task, this.composerTextarea.value));
+                    const itemCtor = module.default;
+                this.tasksArr.push(new itemCtor(task, taskName));
                 console.log(module);
             }
                 );
