@@ -1,5 +1,8 @@
-import ToDoListItem from './toDoListItem'
-const defaultOptions ={
+import ToDoListItem from './toDoListItem';
+interface optionObject {
+    [listTitle: string]: string
+}
+const defaultOptions: optionObject ={
     listTitle: 'my List'
 };
 
@@ -14,7 +17,6 @@ const Template = `
     <div class="composer__container">
         <label for="newTodo">New task</label>
         <textarea class="list__item__composer-textarea" id="newTodo"></textarea>
-        <button class="btn-add-task is-hidden">Add</button>
         <!--<button class="btn-cansel-add-task"></button>-->
     </div>
 </div>
@@ -29,34 +31,45 @@ const ENTER_KEYCODE = 13;
 export default class ToDoList{
     /**
      *
-     * @param list
+     * @param listContainer
      * @param options
      */
-    constructor(list, options){
-        this.list= list;
+    list: HTMLDivElement;
+    option: Object;
+    titleName: String;
+    titleTarget: HTMLDivElement;
+    titleTextarea: HTMLElement;
+    listItemsContainer: HTMLUListElement;
+    composerContainer: HTMLDivElement;
+    composerTextarea: HTMLTextAreaElement;
+    btnClearAll: HTMLButtonElement;
+    btnRemoveList: HTMLButtonElement;
+    id: string;
+    tasksArr: Array<Object>;
+    constructor(listContainer: HTMLDivElement, options: Object){
+        this.list = listContainer;
         this.list.innerHTML = Template;
-        this.option=Object.assign({},defaultOptions, options);
+        this.option=(<any>Object).assign({},defaultOptions, options);
 
-        this.titleName = this.option.listTitle;
-        this.titleTarget = this.list.querySelector('.list__header__target');
-        this.titleTextarea = this.list.querySelector('.list__header__input');
+        this.titleName = <string>this.option.listTitle;
+        this.titleTarget = <HTMLDivElement>this.list.querySelector('.list__header__target');
+        this.titleTextarea = <HTMLTextAreaElement>this.list.querySelector('.list__header__input');
 
-        this.listItemsContainer = this.list.querySelector('.list__items');
+        this.listItemsContainer = <HTMLUListElement>this.list.querySelector('.list__items');
 
-        this.composerContainer = this.list.querySelector('.composer__container');
-        this.composerTextarea =this.composerContainer.querySelector('.list__item__composer-textarea');
+        this.composerContainer = <HTMLDivElement>this.list.querySelector('.composer__container');
+        this.composerTextarea = <HTMLTextAreaElement>this.composerContainer.querySelector('.list__item__composer-textarea');
 
-        this.btnAddTask = this.composerContainer.querySelector('.btn-add-task');
-        this.btnClearAll = this.list.querySelector('.btn-clear-all');
+        this.btnClearAll = <HTMLButtonElement>this.list.querySelector('.btn-clear-all');
 
-        this.btnRemoveList = this.list.querySelector('.btn-remove-list');
-        this.id = Date.now();
+        this.btnRemoveList = <HTMLButtonElement>this.list.querySelector('.btn-remove-list');
+        this.id = <string>Date.now();
         this.tasksArr = [];
 
         if(options){
-            this.titleName = options.name;
+            this.titleName = <string>options.name;
             this.id = options.id;
-            this.tasksArr = options.tasksArr;
+            this.tasksArr = <Array>options.tasksArr;
             if(this.tasksArr){
                 this.addStoredTasks();
             }
@@ -85,7 +98,7 @@ export default class ToDoList{
         this.list.dispatchEvent(listCreated);
     }
 
-    onUpdate(){
+    onUpdate(e){
         this.recount();
         const listUpdated = new CustomEvent('listUpdated', {
             bubbles: true,
@@ -107,12 +120,6 @@ export default class ToDoList{
         this.list.addEventListener('animationend', this.onRemove.bind(this));
         this.titleTarget.addEventListener('click', this.onTitleClick.bind(this));
         this.titleTextarea.addEventListener('blur', this.onTextareaBlur.bind(this));
-        // this.btnCanselComposer.addEventListener('click', this.closeComposer.bind(this));
-        this.btnAddTask.addEventListener('click', (e)=>{
-            console.log(e);
-            e.preventDefault();
-            this.addTask.bind(this)();
-        });
         this.btnClearAll.addEventListener('click', this.clearAllTasks.bind(this));
         this.btnRemoveList.addEventListener('click', this.removeList.bind(this));
         this.composerTextarea.addEventListener('keydown', (e)=>{
@@ -122,7 +129,6 @@ export default class ToDoList{
            }
         });
         this.composerTextarea.addEventListener('focus',(e)=>{
-            //this.btnAddTask.classList.remove('is-hidden');
             this.composerContainer.classList.add('is-active');
             this.createEventOfListEditing();
         });
@@ -184,6 +190,12 @@ export default class ToDoList{
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
             this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
+
+            // import('./toDoListItem').then(module => {
+            //     this.tasksArr.push(new module.default(task, this.composerTextarea.value));
+            //     console.log(module);
+            // }
+            //     );
             this.onUpdate();
             this.composerTextarea.value = "";
         }else {
@@ -196,10 +208,10 @@ export default class ToDoList{
             const task = document.createElement('div');
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-            return new ToDoListItem(task, item.name, {
-                id: item.id,
-                isDone: item._isDone
-            });
+            // return new ToDoListItem(task, item.name, {
+            //     id: item.id,
+            //     isDone: item._isDone
+            // });
         });
     }
 
@@ -216,7 +228,7 @@ export default class ToDoList{
     }
 
     clearAllTasks(){
-        const TaskNodes = this.listItemsContainer.querySelectorAll('.list__item');
+        const TaskNodes: NodeListOf<Element>  = this.listItemsContainer.querySelectorAll('.list__item');
         TaskNodes.forEach((elem) =>{
             elem.remove();
         });

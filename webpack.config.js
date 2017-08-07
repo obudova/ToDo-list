@@ -1,7 +1,8 @@
 'use strict';
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
-    ExtractTextPlugin = require("extract-text-webpack-plugin")
+    ExtractTextPlugin = require("extract-text-webpack-plugin"),
+    CleanWebpackPlugin = require('clean-webpack-plugin')
     ;
 module.exports = {
 
@@ -36,11 +37,12 @@ module.exports = {
             }
         ]
     },
-    // devServer: {
-    //     contentBase: __dirname
-    // },
+    devServer: {
+        contentBase: __dirname
+    },
     plugins: [
-        new ForkTsCheckerWebpackPlugin(),
+        new CleanWebpackPlugin(['dist']),
+        //new ForkTsCheckerWebpackPlugin(),
         new ExtractTextPlugin({
             filename: '../css/style.css'
         })
