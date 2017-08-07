@@ -4,8 +4,10 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
     webpack = require("webpack"),
-    failPlugin = require('webpack-fail-plugin')
+    htmlWebpackPlugin = require('html-webpack-plugin')
     ;
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 module.exports = {
 
     devtool: 'inline-source-map',
@@ -13,7 +15,8 @@ module.exports = {
         main: './src/js/script.ts',
     },
     output: {
-        path: __dirname + '/dist/js',
+        path:  __dirname + '/dist/',
+        publicPath: '/',
         filename: `[name].bundle.js`
     },
     resolve: {
@@ -35,7 +38,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                loader: 'file-loader?name=../images/[name].[ext]'
+                loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
     },
@@ -43,12 +46,12 @@ module.exports = {
         contentBase: __dirname
     },
     plugins: [
-        failPlugin,
-        new CleanWebpackPlugin(['dist']),
-        new ForkTsCheckerWebpackPlugin(),
         new ExtractTextPlugin({
-            filename: '../css/style.css'
+            filename: 'css/style.css'
         }),
+        new htmlWebpackPlugin({
+            template: 'index.html'
+        })
 
         // new webpack.optimize.CommonsChunkPlugin({
         //     name: "script.js",

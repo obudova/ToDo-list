@@ -165,7 +165,7 @@ header {
   border: 1px solid #dadada;
   background-color: #fff; }
   .is-done .checkbox {
-    background: url(../../src/img/tick.svg) #fff;
+    background: url(../../assets/img/tick.svg) #fff;
     background-size: contain; }
 
 .task-name__container {
@@ -214,7 +214,7 @@ button {
     background-color: #eb0000; }
 
 a.btn-remove {
-  background-image: url("../../src/img/icon-light.svg");
+  background-image: url("../../assets/img/icon-light.svg");
   background-size: contain;
   background-repeat: no-repeat;
   height: 16px;
@@ -235,7 +235,7 @@ a.btn-remove {
     text-decoration: underline; }
 
 .btn-remove-list {
-  background-image: url("../../src/img/cross-remove-sign.svg");
+  background-image: url("../../assets/img/cross-remove-sign.svg");
   background-repeat: no-repeat;
   height: 14px;
   width: 14px;

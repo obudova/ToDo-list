@@ -220,7 +220,7 @@ header {
   border: 1px solid #dadada;
   background-color: #fff; }
   .is-done .checkbox {
-    background: url(../images/tick.svg) #fff;
+    background: url(/assets/img/tick.svg) #fff;
     background-size: contain; }
 
 .task-name__container {
@@ -277,7 +277,7 @@ button {
     background-color: #eb0000; }
 
 a.btn-remove {
-  background-image: url(../images/icon-light.svg);
+  background-image: url(/assets/img/icon-light.svg);
   background-size: contain;
   background-repeat: no-repeat;
   height: 16px;
@@ -316,7 +316,7 @@ a.btn-remove {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4); }
   #todoBuilder::after {
     content: "";
-    background-image: url(../images/add.svg);
+    background-image: url(/assets/img/add.svg);
     background-size: contain;
     background-repeat: no-repeat;
     display: block;
@@ -346,4 +346,4 @@ a.btn-remove {
     left: calc(100vw - 64px);
     padding: 15px; } }
 
-/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuLi9jc3Mvc3R5bGUuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjc3Mvc3R5bGUuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
