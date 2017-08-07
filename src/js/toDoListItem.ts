@@ -7,18 +7,28 @@ const listItemTemplate = `
 <a class="btn-remove"></a>
 `;
 export default class ToDoListItem {
-    constructor(item, value, options) {
+    name: string;
+    listItem: HTMLDivElement;
+    checkbox: HTMLDivElement;
+    nameTarget: HTMLDivElement;
+    nameTextarea: HTMLTextAreaElement;
+    btnRemove: HTMLAnchorElement;
+    private _isDone: boolean;
+    private _isDeleted: boolean;
+    id: string;
+    options: Object;
+    constructor(item, value, options = null) {
         this.name = value;
         this.listItem = item;
         this.listItem.innerHTML = listItemTemplate;
-        this.checkbox = this.listItem.querySelector('.checkbox');
-        this.nameTarget = this.listItem.querySelector('.task-name__target');
-        this.nameTextarea = this.listItem.querySelector('.task-name__input');
-        this.btnRemove = this.listItem.querySelector('.btn-remove');
+        this.checkbox = <HTMLDivElement>this.listItem.querySelector('.checkbox');
+        this.nameTarget = <HTMLDivElement>this.listItem.querySelector('.task-name__target');
+        this.nameTextarea = <HTMLTextAreaElement>this.listItem.querySelector('.task-name__input');
+        this.btnRemove = <HTMLAnchorElement>this.listItem.querySelector('.btn-remove');
         this._isDone = false;
         this._isDeleted = false;
-        this.id = Date.now();
-        this.options = Object.assign({}, options);
+        this.id = <string>Date.now().toString();
+        this.options = (<any>Object).assign({}, options);
         if(options){
             this.id = options.id;
             this._isDone = options.isDone;
@@ -92,7 +102,7 @@ export default class ToDoListItem {
         const previousName = this.name;
         this.name = this.nameTextarea.value;
         this.nameTarget.classList.remove('is-hidden');
-        this.listItem.classList.remove('is-editing')
+        this.listItem.classList.remove('is-editing');
         const nameChanged = new CustomEvent('nameChanged', {
             bubbles: true,
             detail: {

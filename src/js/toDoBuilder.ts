@@ -5,6 +5,11 @@ const template = `
 <div class="todo-list-board"></div>
 `;
 export default class ToDoBuilder{
+    board: HTMLDivElement;
+    storage: Storage;
+    data: Array<Object>;
+    button: HTMLButtonElement;
+    listsArr: Array<Object>;
     constructor(board) {
         this.board = board;
         this.storage = new Storage('todo-lists');
@@ -26,7 +31,7 @@ export default class ToDoBuilder{
 
     init(){
         this.board.innerHTML = template;
-        this.button = this.board.querySelector('#todoBuilder');
+        this.button = <HTMLButtonElement>this.board.querySelector('#todoBuilder');
         this.listsArr = [];
         this.initEvents();
     }

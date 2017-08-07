@@ -1,11 +1,31 @@
 import ToDoListItem from './toDoListItem';
-interface optionObject {
-    [listTitle: string]: string
+interface optionParam {
+    name: string,
+    id: number,
+    tasksArr: Array<Object>
 }
-const defaultOptions: optionObject ={
+interface optionsMerged {
+    listTitle: string,
+    name: string,
+    id: number,
+    tasksArr: Array<Object>
+}
+interface taskProperties {
+    isDone: boolean,
+    id: number,
+    name: string,
+    _isDone: boolean
+}
+interface optionObject {
+    listTitle: string,
+}
+const defaultOptions: optionObject = {
     listTitle: 'my List'
 };
-
+interface NodeSelector {
+    querySelector<THTMLElement extends HTMLElement>(selectors: string): THTMLElement;
+    querySelectorAll<THTMLElement extends HTMLElement>(selectors: string): NodeListOf<THTMLElement>;
+}
 const Template = `
 
 <div class="list__header">
@@ -28,17 +48,17 @@ const Template = `
 `;
 
 const ENTER_KEYCODE = 13;
-export default class ToDoList{
+export default class ToDoList {
     /**
      *
      * @param listContainer
      * @param options
      */
     list: HTMLDivElement;
-    option: Object;
+    option: optionsMerged;
     titleName: String;
     titleTarget: HTMLDivElement;
-    titleTextarea: HTMLElement;
+    titleTextarea: HTMLTextAreaElement;
     listItemsContainer: HTMLUListElement;
     composerContainer: HTMLDivElement;
     composerTextarea: HTMLTextAreaElement;
@@ -46,7 +66,7 @@ export default class ToDoList{
     btnRemoveList: HTMLButtonElement;
     id: string;
     tasksArr: Array<Object>;
-    constructor(listContainer: HTMLDivElement, options: Object){
+    constructor(listContainer: HTMLDivElement, options: optionParam = null){
         this.list = listContainer;
         this.list.innerHTML = Template;
         this.option=(<any>Object).assign({},defaultOptions, options);
@@ -63,13 +83,13 @@ export default class ToDoList{
         this.btnClearAll = <HTMLButtonElement>this.list.querySelector('.btn-clear-all');
 
         this.btnRemoveList = <HTMLButtonElement>this.list.querySelector('.btn-remove-list');
-        this.id = <string>Date.now();
+        this.id = <string>Date.now().toString();
         this.tasksArr = [];
 
         if(options){
             this.titleName = <string>options.name;
-            this.id = options.id;
-            this.tasksArr = <Array>options.tasksArr;
+            this.id = options.id.toString();
+            this.tasksArr = options.tasksArr;
             if(this.tasksArr){
                 this.addStoredTasks();
             }
@@ -98,7 +118,7 @@ export default class ToDoList{
         this.list.dispatchEvent(listCreated);
     }
 
-    onUpdate(e){
+    onUpdate(){
         this.recount();
         const listUpdated = new CustomEvent('listUpdated', {
             bubbles: true,
@@ -138,7 +158,7 @@ export default class ToDoList{
             console.log('cmposer blur')
         });
         this.listItemsContainer.addEventListener('taskToggled', (e)=>{
-            this.onUpdate(e);
+            this.onUpdate();
         });
         this.listItemsContainer.addEventListener('delete', (e)=>{
             this.deleteTask(e);
@@ -204,20 +224,20 @@ export default class ToDoList{
     }
 
     addStoredTasks(){
-        this.tasksArr = this.tasksArr.map((item) => {
+        this.tasksArr = this.tasksArr.map((item: taskProperties) => {
             const task = document.createElement('div');
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-            // return new ToDoListItem(task, item.name, {
-            //     id: item.id,
-            //     isDone: item._isDone
-            // });
+            return new ToDoListItem(task, item.name, {
+                id: item.id,
+                isDone: item._isDone
+            });
         });
     }
 
     deleteTask(e) {
         const taskId = e.detail.id;
-        this.tasksArr = this.tasksArr.filter((elem)=>{
+        this.tasksArr = this.tasksArr.filter((elem: taskProperties)=>{
             return elem.id !== taskId;
         });
         this.onUpdate();
@@ -228,7 +248,7 @@ export default class ToDoList{
     }
 
     clearAllTasks(){
-        const TaskNodes: NodeListOf<Element>  = this.listItemsContainer.querySelectorAll('.list__item');
+        const TaskNodes  = this.listItemsContainer.querySelectorAll('.list__item');
         TaskNodes.forEach((elem) =>{
             elem.remove();
         });
@@ -252,9 +272,10 @@ export default class ToDoList{
         }
     }
     recount(){
+        console.log(this.tasksArr);
         this.list
             .querySelector('.counter-done')
-            .innerHTML = this.tasksArr.filter(todoListItem => !todoListItem.isDone).length;
+            .innerHTML = this.tasksArr.filter((todoListItem: taskProperties)=> !todoListItem.isDone).length.toString();
     }
 }
 // export var __useDefault = true;
