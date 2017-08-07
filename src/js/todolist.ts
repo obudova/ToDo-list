@@ -1,4 +1,4 @@
-import ToDoListItem from './toDoListItem';
+// import ToDoListItem from './toDoListItem';
 interface optionParam {
     name: string,
     id: number,
@@ -91,7 +91,7 @@ export default class ToDoList {
             this.id = options.id.toString();
             this.tasksArr = options.tasksArr;
             if(this.tasksArr){
-                this.addStoredTasks();
+                //this.addStoredTasks();
             }
         }else {
             this.addToStorage();
@@ -209,13 +209,13 @@ export default class ToDoList {
             const task = document.createElement('div');
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-            this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
+            //this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
 
-            // import('./toDoListItem').then(module => {
-            //     this.tasksArr.push(new module.default(task, this.composerTextarea.value));
-            //     console.log(module);
-            // }
-            //     );
+            import('./toDoListItem').then(module => {
+                this.tasksArr.push(new module.default(task, this.composerTextarea.value));
+                console.log(module);
+            }
+                );
             this.onUpdate();
             this.composerTextarea.value = "";
         }else {
@@ -228,10 +228,10 @@ export default class ToDoList {
             const task = document.createElement('div');
             task.classList.add('list__item');
             this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-            return new ToDoListItem(task, item.name, {
-                id: item.id,
-                isDone: item._isDone
-            });
+            // return new ToDoListItem(task, item.name, {
+            //     id: item.id,
+            //     isDone: item._isDone
+            // });
         });
     }
 
@@ -275,7 +275,7 @@ export default class ToDoList {
         console.log(this.tasksArr);
         this.list
             .querySelector('.counter-done')
-            .innerHTML = this.tasksArr.filter((todoListItem: taskProperties)=> !todoListItem.isDone).length.toString();
+            .innerHTML = this.tasksArr.filter((item: taskProperties)=> !item.isDone).length.toString();
     }
 }
 // export var __useDefault = true;

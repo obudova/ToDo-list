@@ -2,7 +2,8 @@
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    CleanWebpackPlugin = require('clean-webpack-plugin')
+    CleanWebpackPlugin = require('clean-webpack-plugin'),
+    webpack = require("webpack")
     ;
 module.exports = {
 
@@ -45,6 +46,11 @@ module.exports = {
         //new ForkTsCheckerWebpackPlugin(),
         new ExtractTextPlugin({
             filename: '../css/style.css'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "script.js",
+            async: true,
+            children: true
         })
     ]
 

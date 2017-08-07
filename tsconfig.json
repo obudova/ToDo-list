@@ -3,6 +3,7 @@
     "sourceMap": true,
     "target": "es5",
     "allowJs": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "lib": [ "es5", "dom", "es2015"]
   }
 }
