@@ -1,5 +1,6 @@
 import ToDoBuilder from './toDoBuilder';
 import '../css/style.scss';
+import '../../manifest.json';
 new ToDoBuilder(document.querySelector('.board'));
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
