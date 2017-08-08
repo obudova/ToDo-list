@@ -12,7 +12,7 @@ module.exports = {
 
     devtool: 'inline-source-map',
     entry: {
-        main: './src/js/script.ts',
+        main: './src/js/script.ts'
     },
     output: {
         path:  __dirname + '/dist/',
@@ -38,6 +38,10 @@ module.exports = {
             },
             {
                 test: /\.(svg|json)$/,
+                loader: 'file-loader?name=[path][name].[ext]'
+            },
+            {
+                test: /sw.js/,
                 loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
