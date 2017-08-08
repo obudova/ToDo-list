@@ -90,8 +90,8 @@ export default class ToDoList {
             this.titleName = <string>options.name;
             this.id = options.id.toString();
             this.tasksArr = options.tasksArr;
-            if(this.tasksArr){
-                //this.addStoredTasks();
+            if(this.tasksArr.length){
+                this.addStoredTasks();
             }
         }else {
             this.addToStorage();
@@ -212,28 +212,31 @@ export default class ToDoList {
             //this.tasksArr.push(new ToDoListItem(task, this.composerTextarea.value));
             const taskName = this.composerTextarea.value;
             import('./toDoListItem').then(module => {
-                    const itemCtor = module.default;
-                this.tasksArr.push(new itemCtor(task, taskName));
-                console.log(module);
-            }
-                );
-            this.onUpdate();
-            this.composerTextarea.value = "";
+                this.tasksArr.push(new module.default(task, taskName));
+                this.onUpdate();
+                this.composerTextarea.value = "";
+                console.log(this.tasksArr);
+            });
+            //this.tasksArr.push(itemCtor);
+
         }else {
             //alert('Task field is empty')
         }
     }
 
     addStoredTasks(){
-        this.tasksArr = this.tasksArr.map((item: taskProperties) => {
-            const task = document.createElement('div');
-            task.classList.add('list__item');
-            this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
-            // return new ToDoListItem(task, item.name, {
-            //     id: item.id,
-            //     isDone: item._isDone
-            // });
-        });
+        import('./toDoListItem').then(module => {
+                const itemCtor = module.default;
+                this.tasksArr = this.tasksArr.map((item: taskProperties) => {
+                    const task = document.createElement('div');
+                    task.classList.add('list__item');
+                    this.listItemsContainer.insertBefore(task, this.listItemsContainer.querySelector('.composer__container'));
+                    return new itemCtor(task, item.name, {
+                        id: item.id,
+                        isDone: item._isDone
+                    })
+                });
+            });
     }
 
     deleteTask(e) {
