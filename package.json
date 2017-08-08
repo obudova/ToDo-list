@@ -4,11 +4,9 @@
   "description": "Task manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "sass --watch src/css/style.scss:dist/css/style.css",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
     "build": "rm -rf dist && webpack",
-    "watch": "rm -rf dist && webpack -w",
-    "browserify": "browserify dist/js/script.js -o dist/js/bundle.js"
+    "watch": "rm -rf dist && webpack -w"
   },
   "repository": {
     "type": "git",
